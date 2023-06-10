@@ -1,15 +1,20 @@
-
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import User from "./components/user/User"
+import Home from "./components/home/LandingPage"
 import './App.css'
-import Login from './components/Login/Login'
+import Navbar from "./Navbar";
+
 
 function App() {
   return (
-    <>
-      {/* <Login /> */}
-      <div className='className="text-sm font-medium text-red-900 underline'>
-     hello
-    </div>
-    </>
+    <BrowserRouter>
+    <Navbar/>
+      <Routes>
+        <Route path="/" element={<User />} />
+        <Route path="/home" element={<Home />} />
+      </Routes>
+
+    </BrowserRouter>
   )
 }
 
