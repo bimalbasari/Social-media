@@ -1,9 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const authRoutes = require('./routes/auth');
+const userRoutes = require('./routes/user');
 
-const app = express();
 
 // Connect to MongoDB
 mongoose.connect("mongodb://127.0.0.1:27017/SocailMedia").then(() => {
@@ -12,15 +11,15 @@ mongoose.connect("mongodb://127.0.0.1:27017/SocailMedia").then(() => {
   console.log('MongoDB connection error:', error);
 });
 
+
+const app = express();
+
 app.use(express.json());
-
-// Enable CORS for all routes
+app.use(express.urlencoded({ extended: true }))
 app.use(cors());
+app.use('/api/user', userRoutes);
 
-// Routes
-app.use('/api/auth', authRoutes);
 
-// Start the server
 app.listen(3000, () => {
   console.log('Server started on port http://localhost:3000');
 });

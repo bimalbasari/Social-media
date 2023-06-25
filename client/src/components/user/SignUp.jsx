@@ -10,6 +10,9 @@ const Signup = ({ setAccount }) => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
+  const [picture, setPicture] = useState("");
+  const [previewURL, setPreviewURL] = useState('');
+  console.log(picture)
 
   const handleFirstNameChange = (e) => {
     setFirstName(e.target.value);
@@ -18,7 +21,20 @@ const Signup = ({ setAccount }) => {
   const handleLastNameChange = (e) => {
     setLastName(e.target.value);
   };
+  const handlePictureChange = (e) => {
+    let selectedPicture = e.target.files[0]
+    setPicture(selectedPicture);
 
+    if (selectedPicture) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewURL(reader.result);
+      };
+      reader.readAsDataURL(selectedPicture);
+    }
+
+
+  };
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
@@ -73,15 +89,22 @@ const Signup = ({ setAccount }) => {
       setError('Password and confirm password do not match');
       return;
     }
-
+    const formData = new FormData();
+    formData.append('firstName', firstName);
+    formData.append('lastName', lastName);
+    formData.append('picture', picture);
+    formData.append('email', email);
+    formData.append('mobile', mobile);
+    formData.append('password', password);
+   
     try {
-      await axios.post('http://localhost:3000/api/auth/signup', {
-        firstName,
-        lastName,
-        email,
-        mobile,
-        password
-      });
+      setError(null);
+
+      await axios.post('http://localhost:3000/api/user/signup',formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      } );
 
       // Redirect to the login page after successful signup
       // Replace '/login' with your desired login route
@@ -92,8 +115,8 @@ const Signup = ({ setAccount }) => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
-      <div className="bg-white shadow-md rounded-md p-8 w-96">
+    <div className="flex justify-center items-center p-8  bg-gray-100">
+      < div className="bg-white shadow-md rounded-md p-8 w-96" >
         <h2 className="text-2xl font-bold mb-6 text-center">Signup</h2>
         {error && <div className="text-red-500 mb-4">{error}</div>}
         <form onSubmit={handleSubmit}>
@@ -108,7 +131,7 @@ const Signup = ({ setAccount }) => {
                 className="border border-gray-300 rounded-md px-3 py-2 w-full"
                 value={firstName}
                 onChange={handleFirstNameChange}
-                required
+              // required
               />
             </div>
             <div>
@@ -121,10 +144,31 @@ const Signup = ({ setAccount }) => {
                 className="border border-gray-300 rounded-md px-3 py-2 w-full"
                 value={lastName}
                 onChange={handleLastNameChange}
-                required
+              // required
               />
             </div>
           </div>
+          <div className="mb-4">
+            <label className="block mb-2" htmlFor="picture">
+              Picture:
+            </label>
+            <input
+              type="file"
+              id="picture"
+              className="border border-gray-300 rounded-md px-3 py-2 w-full"
+              onChange={handlePictureChange}
+            // name="picture"
+            //  // required
+            />
+            {picture && (
+              <img
+                src={previewURL}
+                alt="User's Picture"
+                className="mt-2 m-auto w-32 h-32 object-contain"
+              />
+            )}
+          </div>
+
           <div className="mb-4">
             <label className="block mb-2" htmlFor="email">
               Email:
@@ -135,7 +179,7 @@ const Signup = ({ setAccount }) => {
               className="border border-gray-300 rounded-md px-3 py-2 w-full"
               value={email}
               onChange={handleEmailChange}
-              required
+            // required
             />
           </div>
           <div className="mb-4">
@@ -148,7 +192,7 @@ const Signup = ({ setAccount }) => {
               className="border border-gray-300 rounded-md px-3 py-2 w-full"
               value={mobile}
               onChange={handleMobileChange}
-              required
+            // required
             />
           </div>
           <div className="mb-4">
@@ -162,7 +206,7 @@ const Signup = ({ setAccount }) => {
                 className="border border-gray-300 rounded-md px-3 py-2 w-full"
                 value={password}
                 onChange={handlePasswordChange}
-                required
+              // required
               />
               <button
                 type="button"
@@ -183,7 +227,7 @@ const Signup = ({ setAccount }) => {
               className="border border-gray-300 rounded-md px-3 py-2 w-full"
               value={confirmPassword}
               onChange={handleConfirmPasswordChange}
-              required
+            // required
             />
           </div>
           <button
@@ -199,8 +243,8 @@ const Signup = ({ setAccount }) => {
         >
           Existing User? Log in
         </button>
-      </div>
-    </div>
+      </div >
+    </div >
 
   );
 };
