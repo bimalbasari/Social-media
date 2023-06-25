@@ -57,7 +57,7 @@ const Signup = ({ setAccount }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setError(null);
     // Validate email format using regex pattern
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(email)) {
@@ -96,15 +96,15 @@ const Signup = ({ setAccount }) => {
     formData.append('email', email);
     formData.append('mobile', mobile);
     formData.append('password', password);
-   
-    try {
-      setError(null);
 
-      await axios.post('http://localhost:3000/api/user/signup',formData, {
+    try {
+     
+
+      await axios.post('http://localhost:3000/api/user/signup', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
-      } );
+      });
 
       // Redirect to the login page after successful signup
       // Replace '/login' with your desired login route
@@ -131,7 +131,7 @@ const Signup = ({ setAccount }) => {
                 className="border border-gray-300 rounded-md px-3 py-2 w-full"
                 value={firstName}
                 onChange={handleFirstNameChange}
-              // required
+                required
               />
             </div>
             <div>
@@ -144,7 +144,7 @@ const Signup = ({ setAccount }) => {
                 className="border border-gray-300 rounded-md px-3 py-2 w-full"
                 value={lastName}
                 onChange={handleLastNameChange}
-              // required
+                required
               />
             </div>
           </div>
@@ -157,8 +157,7 @@ const Signup = ({ setAccount }) => {
               id="picture"
               className="border border-gray-300 rounded-md px-3 py-2 w-full"
               onChange={handlePictureChange}
-            // name="picture"
-            //  // required
+              required
             />
             {picture && (
               <img
@@ -179,7 +178,7 @@ const Signup = ({ setAccount }) => {
               className="border border-gray-300 rounded-md px-3 py-2 w-full"
               value={email}
               onChange={handleEmailChange}
-            // required
+              required
             />
           </div>
           <div className="mb-4">
@@ -192,7 +191,7 @@ const Signup = ({ setAccount }) => {
               className="border border-gray-300 rounded-md px-3 py-2 w-full"
               value={mobile}
               onChange={handleMobileChange}
-            // required
+              required
             />
           </div>
           <div className="mb-4">
@@ -206,7 +205,7 @@ const Signup = ({ setAccount }) => {
                 className="border border-gray-300 rounded-md px-3 py-2 w-full"
                 value={password}
                 onChange={handlePasswordChange}
-              // required
+                required
               />
               <button
                 type="button"
@@ -227,7 +226,7 @@ const Signup = ({ setAccount }) => {
               className="border border-gray-300 rounded-md px-3 py-2 w-full"
               value={confirmPassword}
               onChange={handleConfirmPasswordChange}
-            // required
+              required
             />
           </div>
           <button
