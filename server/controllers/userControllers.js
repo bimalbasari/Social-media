@@ -2,7 +2,7 @@ const fs = require("fs");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require("../models/user.model");
-
+const Listing = require("../models/listing.modal")
 
 const createUser = async (req, res) => {
     try {
@@ -50,20 +50,31 @@ const createUser = async (req, res) => {
     }
 };
 
-
-const index = async (req, res, next) => {
+const listingProperty = (req, res) => {
     try {
+        let img = fs.readFileSync(req.file.path);
+        let encode_image = img.toString("base64");
+        const { location, price, category, description } = req.body;
 
-        let users = await User.find()
-        return res.status(200).json({
-            users
-        })
+        // Create a new listing using the Listing model
+        const newListing = new Listing({
+            location,
+            price,
+            category,
+            description,
+            picture: {
+                contentType: req.file.mimetype,
+                size: req.file.size,
+                image: encode_image,
+            }
+        });
+        newListing.save()
+        res.status(201).json(newListing);
 
     } catch (error) {
-        return res.json({
-            message: 'An error Occured'
-        })
-    }
+        console.log("error",error)
+        res.status(500).json({ error: 'An error occurred while creating the listing.' });
+    };
 }
 
 const userLogin = async (req, res) => {
@@ -99,10 +110,25 @@ const userLogin = async (req, res) => {
 }
 
 
+const index = async (req, res, next) => {
+    try {
+
+        let users = await User.find()
+        return res.status(200).json({
+            users
+        })
+
+    } catch (error) {
+        return res.json({
+            message: 'An error Occured'
+        })
+    }
+}
 
 
 
 module.exports = {
     createUser,
-    userLogin
+    userLogin,
+    listingProperty
 }

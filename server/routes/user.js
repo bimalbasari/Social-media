@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const userController = require("../controllers/userControllers")
 const User = require('../models/user.model');
 
+
 const router = express.Router();
 const storage = multer.diskStorage({
   // destination: function (req, file, cb) {
@@ -21,8 +22,11 @@ router.post('/signup', upload.single("picture"), userController.createUser);
 
 
 // User login
-router.post('/login',userController.userLogin)
+router.post('/login', userController.userLogin)
 
+// Listings
+
+router.post('/listings', upload.single("picture"),userController.listingProperty );
 
 module.exports = router;
 

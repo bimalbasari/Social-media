@@ -105,9 +105,6 @@ const Signup = ({ setAccount }) => {
         },
       });
 
-      // Redirect to the login page after successful signup
-      // Replace '/login' with your desired login route
-      // window.location.href = '/login';
     } catch (error) {
       setError(error.response.data.message);
     }
