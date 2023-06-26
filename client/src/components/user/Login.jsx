@@ -1,11 +1,17 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import { useState, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { login } from "../../features/index.jsx";
+import { authenticationLogin } from '../../services/api.jsx';
 
-const Login = ({setAccount}) => {
+const Login = ({ setAccount }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -19,6 +25,7 @@ const Login = ({setAccount}) => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(null)
 
     // Validate email format using regex pattern
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -35,19 +42,19 @@ const Login = ({setAccount}) => {
       );
       return;
     }
+
     // Perform login logic here
-    try {
-      const user = await axios.post('http://localhost:3000/api/auth/login', {
-        email,
-        password
-      });
-      alert(user.data.token)
-      console.log(user.data)
-      // Redirect to the login page after successful signup
-      // Replace '/login' with your desired login route
-      // window.location.href = '/login';
-    } catch (error) {
-      setError(error.response.data.message);
+    const data = {
+      email,
+      password
+    }
+    const user = await authenticationLogin(data);
+    if (typeof (user) === 'object') {
+      dispatch(login(user.data))
+      navigate("/home")
+    } else {
+      setError(user)
+      return
     }
   };
 
@@ -99,12 +106,12 @@ const Login = ({setAccount}) => {
             Login
           </button>
         </form>
-        <button  onClick={()=>setAccount(false)}
-            type="button"
-            className="bg-white text-blue rounded-md px-4 py-2 w-full"
-          >
+        <button onClick={() => setAccount(false)}
+          type="button"
+          className="bg-white text-blue rounded-md px-4 py-2 w-full"
+        >
           New user? Create an account
-          </button>
+        </button>
       </div>
     </div>
   );

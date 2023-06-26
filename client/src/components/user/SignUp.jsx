@@ -12,7 +12,6 @@ const Signup = ({ setAccount }) => {
   const [error, setError] = useState('');
   const [picture, setPicture] = useState("");
   const [previewURL, setPreviewURL] = useState('');
-  console.log(picture)
 
   const handleFirstNameChange = (e) => {
     setFirstName(e.target.value);

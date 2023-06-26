@@ -8,13 +8,13 @@ const createUser = async (req, res) => {
     try {
         let img = fs.readFileSync(req.file.path);
         let encode_image = img.toString("base64");
-        const { 
+        const {
             firstName,
             lastName,
             email,
             mobile,
-            password 
-            } = req.body;
+            password
+        } = req.body;
 
         const existingUser = await User.findOne({ email });
 
@@ -66,17 +66,34 @@ const index = async (req, res, next) => {
     }
 }
 
-const show = async (req, res, next) => {
+const userLogin = async (req, res) => {
     try {
-        let userID = req.body.userID;
-        let user = await User.find(userID);
-        return res.json({
-            user
-        })
+        const { email, password } = req.body;
+
+        // Check if the user exists
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(401).json({ message: 'User not found' });
+        } else {
+            // Compare the entered password with the hashed password
+            const isPasswordValid = await bcrypt.compare(password, user.password);
+
+            if (!isPasswordValid) {
+                return res.status(401).json({ message: 'Authentication failed' });
+            }
+
+            const { _id, firstName, lastName, mobile, email } = user;
+
+            // Generate a JWT token
+            const token = jwt.sign({ userId: user._id }, 'secretKey');
+
+            res.status(200).json({
+                token: token,
+                user: { _id, firstName, lastName, mobile, email }
+            });
+        }
     } catch (error) {
-        return res.json({
-            message: 'An error Occured'
-        })
+        res.status(500).json({ message: 'Internal server error' });
     }
 
 }
@@ -87,4 +104,5 @@ const show = async (req, res, next) => {
 
 module.exports = {
     createUser,
+    userLogin
 }
