@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { listing } from "../services/Api";
+import { userEvents } from "../services/Api";
 import { selectUser } from "../features/index"
 
 const AddEvent = ({ setListing }) => {
@@ -50,15 +50,15 @@ const AddEvent = ({ setListing }) => {
 
     event.preventDefault();
 
-    const config = { Authorization: `Bearer ${user.token}` };
+    const config = `Bearer ${user.token}`;
 
 
     const formData = {
       location, price, picture, description, category
     }
 
-    const property = await listing(formData, config)
-    setListing(false)
+    const property = await userEvents(formData, config)
+    // setListing(false)
     // Perform any necessary submission logic here
   };
 

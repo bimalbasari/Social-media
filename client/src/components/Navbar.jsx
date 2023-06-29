@@ -43,7 +43,7 @@ const Navbar = () => {
               if (listing) {
                 setListing(false)
               }
-            }} >Add listing</button>
+            }} >Add Event</button>
 
           </li>
           <li className="mx-3 my-4 md:my-0" >

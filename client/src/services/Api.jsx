@@ -13,7 +13,6 @@ export const authenticationLogin = async (data) => {
 }
 
 export const createAccount = async (data) => {
-    console.log(data, "dataApi")
     try {
         const createUser = await axios.post(`${URL}/api/user/signup`, data, {
             headers: {
@@ -28,19 +27,19 @@ export const createAccount = async (data) => {
     }
 
 }
-export const listing = async (data, config) => {
+
+export const userEvents = async (data, config) => {
     try {
-        console.log("front end ", data)
-        const userData = await axios.post(`${URL}/api/user/listings`, data, {
+        const userData = await axios.post(`${URL}/api/user/event`, data, {
             headers: {
                 'Content-Type': 'multipart/form-data',
-                config
+                authorization: config
             },
         });
-        document.cookies = `token=${userData.data.token}`
-        return userData
+        // document.cookies = `token=${userData.data.token}`
+        // return userData
     } catch (error) {
-        console.log("LIstining", error)
+        console.log("userEvents", error)
 
     }
 }

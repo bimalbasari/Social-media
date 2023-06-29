@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const userController = require("../controllers/userControllers")
 const User = require('../models/user.model');
+const authMiddleware=require("../middlewares/authMiddleware") 
 
 
 const router = express.Router();
@@ -27,7 +28,7 @@ router.post('/login', userController.userLogin)
 
 // Listings
 
-router.post('/listings', upload.single("picture"),userController.listingProperty );
+router.post('/event',authMiddleware, upload.single("picture"),userController.userEvent);
 
 module.exports = router;
 

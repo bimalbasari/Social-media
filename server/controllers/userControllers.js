@@ -1,8 +1,11 @@
 const fs = require("fs");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const dotenv=require("dotenv")
 const User = require("../models/user.model");
 const Listing = require("../models/listing.modal")
+
+dotenv.config();
 
 const createUser = async (req, res) => {
     try {
@@ -51,12 +54,48 @@ const createUser = async (req, res) => {
     }
 };
 
-const listingProperty = (req, res) => {
+
+const userLogin = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        // Check if the user exists
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(401).json({ message: 'User not found' });
+        } else {
+            // Compare the entered password with the hashed password
+            const isPasswordValid = await bcrypt.compare(password, user.password);
+
+            if (!isPasswordValid) {
+                return res.status(401).json({ message: 'Authentication failed' });
+            }
+
+            const {  firstName, lastName, mobile, email, picture } = user;
+
+            // Generate a JWT token
+            const token = jwt.sign({ userId: user._id },process.env.SERECTKEY);
+
+            // Convert the base64-encoded image back to its original form
+            const imageBuffer = Buffer.from(picture.image, 'base64');
+
+            res.status(200).json({
+                token: token,
+                user: { firstName, lastName, mobile, email, picture: imageBuffer }
+            });
+        }
+    } catch (error) {
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+
+const userEvent = (req, res) => {
     try {
         let img = fs.readFileSync(req.file.path);
         let encode_image = img.toString("base64");
-        const { location, price, category, description, user } = req.body;
-        console.log(user)
+        const { location, price, category, description} = req.body;
+        console.log(req.body)
 
         // Create a new listing using the Listing model
         const newListing = new Listing({
@@ -79,74 +118,6 @@ const listingProperty = (req, res) => {
     };
 }
 
-/*const userLogin = async (req, res) => {
-    try {
-        const { email, password } = req.body;
-
-        // Check if the user exists
-        const user = await User.findOne({ email });
-        if (!user) {
-            return res.status(401).json({ message: 'User not found' });
-        } else {
-            // Compare the entered password with the hashed password
-            const isPasswordValid = await bcrypt.compare(password, user.password);
-
-            if (!isPasswordValid) {
-                return res.status(401).json({ message: 'Authentication failed' });
-            }
-            const { contentType, image } = user.picture;
-            const { _id, firstName, lastName, mobile, email } = user;
-
-            // Generate a JWT token
-            const token = jwt.sign({ userId: user._id }, 'secretKey');
-
-            res.status(200).json({
-                token: token,
-                user: { _id, firstName, lastName, mobile, email }
-            });
-        }
-    } catch (error) {
-        res.status(500).json({ message: 'Internal server error' });
-    }
-
-}
-*/
-
-
-
-const userLogin = async (req, res) => {
-    try {
-        const { email, password } = req.body;
-
-        // Check if the user exists
-        const user = await User.findOne({ email });
-        if (!user) {
-            return res.status(401).json({ message: 'User not found' });
-        } else {
-            // Compare the entered password with the hashed password
-            const isPasswordValid = await bcrypt.compare(password, user.password);
-
-            if (!isPasswordValid) {
-                return res.status(401).json({ message: 'Authentication failed' });
-            }
-
-            const { _id, firstName, lastName, mobile, email, picture } = user;
-
-            // Generate a JWT token
-            const token = jwt.sign({ userId: user._id }, 'secretKey');
-
-            // Convert the base64-encoded image back to its original form
-            const imageBuffer = Buffer.from(picture.image, 'base64');
-
-            res.status(200).json({
-                token: token,
-                user: { _id, firstName, lastName, mobile, email, picture:imageBuffer }
-            });
-        }
-    } catch (error) {
-        res.status(500).json({ message: 'Internal server error' });
-    }
-};
 
 const index = async (req, res, next) => {
     try {
@@ -168,6 +139,6 @@ const index = async (req, res, next) => {
 module.exports = {
     createUser,
     userLogin,
-    listingProperty
+    userEvent
 }
 

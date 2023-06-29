@@ -99,12 +99,8 @@ const Signup = ({ setAccount }) => {
     // formData.append('mobile', mobile);
     // formData.append('password', password);
     const formData = { firstName, lastName, email, mobile, password, picture }
-    console.log(formData ,"fromData")
-
     try {
-
       const userCreate = await createAccount(formData)
-      console.log(userCreate ,"userCreated")
       if (userCreate) {
         setCreate(userCreate.data.message)
         setAccount(true)
