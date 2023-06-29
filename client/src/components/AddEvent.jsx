@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
-import {listing} from "../services/Api"
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { listing } from "../services/Api";
+import { selectUser } from "../features/index"
 
-const AddListing = ({ setListing }) => {
+const AddEvent = ({ setListing }) => {
+
   const [location, setLocation] = useState('');
   const [price, setPrice] = useState('');
   const [category, setCategory] = useState('');
   const [description, setDescription] = useState('');
   const [picture, setPicture] = useState("");
   const [previewURL, setPreviewURL] = useState('');
+  const user = useSelector(selectUser)
 
   const handleLocationChange = (event) => {
     setLocation(event.target.value);
@@ -27,6 +31,7 @@ const AddListing = ({ setListing }) => {
   };
 
   const handleImageChange = (e) => {
+
     let selectedPicture = e.target.files[0]
     setPicture(selectedPicture);
 
@@ -42,25 +47,24 @@ const AddListing = ({ setListing }) => {
   };
 
   const handleSubmit = async (event) => {
-    console.log(location,category)
-    setListing(false)
+
     event.preventDefault();
-    const formData={
-      location,price,picture,description,category
+
+    const config = { Authorization: `Bearer ${user.token}` };
+
+
+    const formData = {
+      location, price, picture, description, category
     }
-  //   const formData = new FormData();
-  //   formData.append('location', location);
-  //   formData.append('price', price);
-  //   formData.append('picture', picture);
-  //   formData.append('description', description);
-  //   formData.append('category', category);
-   console.log(formData)
-    const property = await listing(formData)
+
+    const property = await listing(formData, config)
+    setListing(false)
     // Perform any necessary submission logic here
   };
 
   return (
     <form onSubmit={handleSubmit} className="max-w-sm mx-auto">
+
       <div className="mb-4">
         <input
           type="text"
@@ -83,12 +87,11 @@ const AddListing = ({ setListing }) => {
         <select
           value={category}
           onChange={handleCategoryChange}
-          className="w-full border rounded py-2 px-3"
-        >
-          <option value="">Select Category</option>
-          <option value="Category 1">Category 1</option>
-          <option value="Category 2">Category 2</option>
-          <option value="Category 3">Category 3</option>
+          className="w-full  rounded py-2 px-3 bg-white text-blue-500 font-bold duration-200">
+          <option value="" >Select Partner</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Any">Any</option>
         </select>
       </div>
       <div className="mb-4">
@@ -103,11 +106,11 @@ const AddListing = ({ setListing }) => {
         <input
           type="file"
           onChange={handleImageChange}
-          className="w-full border rounded py-2 px-3"
+          className="bg-white w-full border rounded py-2 px-3"
         />
       </div>
-      <div>
-        <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+      <div className='m-auto'>
+        <button type="submit" className="bg-white hover:bg-blue-500 text-blue-500 duration-300 hover:text-white font-bold py-2 px-4 rounded">
           Submit
         </button>
       </div>
@@ -115,4 +118,4 @@ const AddListing = ({ setListing }) => {
   );
 };
 
-export default AddListing;
+export default AddEvent;

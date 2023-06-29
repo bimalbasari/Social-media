@@ -1,13 +1,21 @@
+import { useState, useEffect } from 'react';
+import { NavLink,useNavigate } from "react-router-dom";
+import { useSelector } from 'react-redux';
+import AddEvent from './AddEvent';
+import { selectUser } from "../features/index";
 
-
-
-
-import React, { useState } from 'react';
-import { NavLink } from "react-router-dom";
-import AddListing from './AddListing';
 const Navbar = () => {
   const [listing, setListing] = useState(false)
   const [isOpen, setIsOpen] = useState(false);
+  const user = useSelector(selectUser)
+  const navgate = useNavigate()
+
+  useEffect(() => {
+    if (user == null) {
+      navgate("/login")
+    }
+  })
+
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -26,23 +34,26 @@ const Navbar = () => {
           </span>
         </div>
         <ul className='md:flex md:items-center z-[-1] md:z-auto md:static absolute bg-white w-full left-0 md:w-auto md:py:0 py-4 md:pl-0 pl-7 md:opacity-100 opacity-0'>
-          <li className="mx-4 my-6 md:my-0">
-            <NavLink className="text-xl hover:text-cyan-400 duration-500" >My Team</NavLink>
+          <li className="mx-3 my-4 md:my-0">
+            <NavLink className=" hover:text-cyan-400 duration-500" >My Team</NavLink>
           </li>
-          <li className="mx-4 my-6 md:my-0">
-            <button className="text-xl hover:text-cyan-400 duration-500 border-none" onClick={() => {
+          <li className="mx-3 my-4 md:my-0">
+            <button className=" hover:text-cyan-400 duration-500 border-none" onClick={() => {
               setListing(true)
+              if (listing) {
+                setListing(false)
+              }
             }} >Add listing</button>
 
           </li>
-          <li className="mx-4 my-6 md:my-0">
-            <img src="./logo.jpg" alt="Logo" className='h-10 inline rounded-full' />
+          <li className="mx-3 my-4 md:my-0" >
+         { user && <img src={user.picture} alt="Logo" className='h-10 inline rounded-full' />}
           </li>
         </ul>
 
       </nav>
 
-      {listing && <div className='mt-6'><AddListing setListing={setListing} /> </div>}
+      {listing && <div className='m-auto  bg-cyan-700  h-full w-auto p-6 shadow '><AddEvent setListing={setListing}/> </div>}
 
     </div>
   );

@@ -18,6 +18,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 // user signup route
+// 
 router.post('/signup', upload.single("picture"), userController.createUser);
 
 

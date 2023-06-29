@@ -8,23 +8,40 @@ export const authenticationLogin = async (data) => {
         document.cookies = `token=${userData.data.token}`
         return userData
     } catch (error) {
-        return error.response.data.message
+        throw new Error(error.response.data.message)
     }
 }
 
+export const createAccount = async (data) => {
+    console.log(data, "dataApi")
+    try {
+        const createUser = await axios.post(`${URL}/api/user/signup`, data, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        }
 
-export const listing = async (data) => {
+        );
+        return createUser
+    } catch (error) {
+        console.log(error)
+    }
+
+}
+export const listing = async (data, config) => {
     try {
         console.log("front end ", data)
         const userData = await axios.post(`${URL}/api/user/listings`, data, {
             headers: {
-              'Content-Type': 'multipart/form-data',
+                'Content-Type': 'multipart/form-data',
+                config
             },
-          });
+        });
         document.cookies = `token=${userData.data.token}`
         return userData
     } catch (error) {
-        console.log("fontend",error)
+        console.log("LIstining", error)
 
     }
 }
+

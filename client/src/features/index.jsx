@@ -6,7 +6,8 @@ import { createSlice, combineReducers, createAsyncThunk } from "@reduxjs/toolkit
 export const userSlice = createSlice({
     name: 'user',
     initialState: {
-        value: null,
+        value: JSON.parse(localStorage.getItem('user')) ? JSON.parse(localStorage.getItem('user')).user : null,
+
     },
     reducers: {
         login: (state, action) => {
@@ -22,4 +23,5 @@ const rootReducers = combineReducers({
     user: userSlice.reducer
 })
 
-export default rootReducers
+export const selectUser=(state)=>state.user.value;
+export default rootReducers;

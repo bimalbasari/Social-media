@@ -13,9 +13,10 @@ const createUser = async (req, res) => {
             lastName,
             email,
             mobile,
-            password
+            password,
         } = req.body;
 
+        console.log(req.body, "hello")
         const existingUser = await User.findOne({ email });
 
         if (existingUser) {
@@ -54,7 +55,8 @@ const listingProperty = (req, res) => {
     try {
         let img = fs.readFileSync(req.file.path);
         let encode_image = img.toString("base64");
-        const { location, price, category, description } = req.body;
+        const { location, price, category, description, user } = req.body;
+        console.log(user)
 
         // Create a new listing using the Listing model
         const newListing = new Listing({
@@ -72,10 +74,45 @@ const listingProperty = (req, res) => {
         res.status(201).json(newListing);
 
     } catch (error) {
-        console.log("error",error)
+        console.log("error", error)
         res.status(500).json({ error: 'An error occurred while creating the listing.' });
     };
 }
+
+/*const userLogin = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        // Check if the user exists
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(401).json({ message: 'User not found' });
+        } else {
+            // Compare the entered password with the hashed password
+            const isPasswordValid = await bcrypt.compare(password, user.password);
+
+            if (!isPasswordValid) {
+                return res.status(401).json({ message: 'Authentication failed' });
+            }
+            const { contentType, image } = user.picture;
+            const { _id, firstName, lastName, mobile, email } = user;
+
+            // Generate a JWT token
+            const token = jwt.sign({ userId: user._id }, 'secretKey');
+
+            res.status(200).json({
+                token: token,
+                user: { _id, firstName, lastName, mobile, email }
+            });
+        }
+    } catch (error) {
+        res.status(500).json({ message: 'Internal server error' });
+    }
+
+}
+*/
+
+
 
 const userLogin = async (req, res) => {
     try {
@@ -93,22 +130,23 @@ const userLogin = async (req, res) => {
                 return res.status(401).json({ message: 'Authentication failed' });
             }
 
-            const { _id, firstName, lastName, mobile, email } = user;
+            const { _id, firstName, lastName, mobile, email, picture } = user;
 
             // Generate a JWT token
             const token = jwt.sign({ userId: user._id }, 'secretKey');
 
+            // Convert the base64-encoded image back to its original form
+            const imageBuffer = Buffer.from(picture.image, 'base64');
+
             res.status(200).json({
                 token: token,
-                user: { _id, firstName, lastName, mobile, email }
+                user: { _id, firstName, lastName, mobile, email, picture:imageBuffer }
             });
         }
     } catch (error) {
         res.status(500).json({ message: 'Internal server error' });
     }
-
-}
-
+};
 
 const index = async (req, res, next) => {
     try {
@@ -132,3 +170,4 @@ module.exports = {
     userLogin,
     listingProperty
 }
+
