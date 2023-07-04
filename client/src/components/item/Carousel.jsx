@@ -7,6 +7,7 @@ const Carousel = ({ children: image, autoSlide = false, autoSlideInterval = 3000
     useEffect(() => {
         if (!autoSlide) { return };
         const slideInterval = setInterval(next, autoSlideInterval);
+        
         return () => clearInterval()
     }, [])
 
@@ -24,7 +25,7 @@ const Carousel = ({ children: image, autoSlide = false, autoSlideInterval = 3000
                 <div className="flex items-center justify-center gap-2">
                     {
                         image.map((_, i) => (
-                            <div className={`transition-all w-3 h-3 bg-white rounded-full ${curr == i ? "p-2" : "bg-opacity-50"}`} />
+                            <div key={i+"acb"} className={`transition-all w-3 h-3 bg-white rounded-full ${curr == i ? "p-2" : "bg-opacity-50"}`} />
                         ))
                     }
 

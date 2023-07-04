@@ -23,32 +23,32 @@ const Navbar = () => {
 
   return (
     <div>
-      <nav className="bg-white px-4 shadow md:flex md:items-center md:justify-between">
+      <nav className="bg-white px-4  h-16 shadow md:flex md:items-center md:justify-between">
         <div>
           <span className='text-2xl font-[Poppins]'>
             <img src="./logo.jpg" alt="Logo" className='h-10 inline rounded-full object-fill' />
-            Social-Media
+            Social Butterfly
           </span>
           <span className='text-3xl cursor-pointer mx-2 md:hidden'>
             =
           </span>
         </div>
         <ul className='md:flex md:items-center z-[-1] md:z-auto md:static absolute bg-white w-full left-0 md:w-auto md:py:0 py-4 md:pl-0 pl-7 md:opacity-100 opacity-0'>
-          <li className="mx-3 my-4 md:my-0">
-            <NavLink className=" hover:text-cyan-400 duration-500" >My Team</NavLink>
+          <li className="mx-3  md:my-0">
+            <NavLink className=" hover:text-cyan-400 duration-500 tracking-tighter" >Add new flats</NavLink>
           </li>
-          <li className="mx-3 my-4 md:my-0">
-            <button className=" hover:text-cyan-400 duration-500 border-none" onClick={() => {
+          <li className="mx-3  md:my-0">
+            <button className=" hover:text-cyan-400 duration-500 border-none tracking-tighter" onClick={() => {
               setListing(true)
               if (listing) {
                 setListing(false)
               }
-            }} >Add Event</button>
+            }} >Add new event</button>
 
           </li>
-          {user && <li className="mx-3 my-0 md:my-0" >
-            <img src={user.picture} alt="Logo" className='h-10 inline rounded-full' />
-            <span className='block m-0'>{user.firstName}</span>
+          {user && <li className='text-md font-[Poppins]'>
+            <img src={user.picture} alt="Profile Picture" className=' h-8 inline rounded-full object-fill mx-3' />
+            <span>{user.firstName}</span>
           </li>}
         </ul>
 

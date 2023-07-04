@@ -8,11 +8,11 @@ let image = [
 
 const FlatmateHome = () => {
     return (
-        <div className="bg-white  md:w-10/12 m-auto  h-full  border-double border-4 border-slate-700 mt-4 rounded-lg overflow-hidden">
+        <div className="bg-white  md: md:w-2/4 m-auto  h-full  border-double border-4 border-slate-700 mt-4 rounded-lg overflow-hidden">
             {/* flatMate card header */}
             <div className="bg-white  drop-shadow-lg flex  items-center rounded-sm">
                 <div className="h-16 w-20 flex items-center justify-center">
-                    <img src="./logo.jpg" alt="" className="h-14  w-auto rounded-full" srcset="" />
+                    <img src="./logo.jpg" alt="" className="h-14  w-auto rounded-full"  />
                 </div>
                 <div className="flex items-center justify-between flex-1 px-2">
                     <div className=" antialiased ">
@@ -30,21 +30,20 @@ const FlatmateHome = () => {
             <div className="py-2">
                 <div className="h-1/3 text-center md:text-3xl text-xl font-bold text-slate-500 p-1">Basic Info</div>
                 <div className="md:flex text-center justify-evenly border-slate-400 border-t">
-                    <div className="border-r border-l border-slate-400 px-4 py-2"><span className="block text-slate-600 border-b border-slate-400 ">Gender</span><span className="block text-slate-500">male</span></div>
-                    <div className="border-r border-l border-slate-400 px-4 py-2"><span className="block text-slate-600 border-b border-slate-400 ">Gender</span><span className="block text-slate-500">male</span></div>
-                    <div className="border-r border-l border-slate-400 px-4 py-2"><span className="block text-slate-600 border-b border-slate-400 ">Gender</span><span className="block text-slate-500">male</span></div>
-                    <div className="border-r border-l border-slate-400 px-4 py-2"><span className="block text-slate-600 border-b border-slate-400 ">Gender</span><span className="block text-slate-500">male</span></div>
-                    <div className="border-r border-l border-slate-400 px-4 py-2"><span className="block text-slate-600 border-b border-slate-400 ">Gender</span><span className="block text-slate-500">male</span></div>
-                    <div className="border-r border-l border-slate-400 px-4 py-2"><span className="block text-slate-600 border-b border-slate-400 ">Gender</span><span className="block text-slate-500">male</span></div>
+                    <div className="border-r border-l border-slate-300 px-4 py-2"><span className="block text-slate-600 border-b border-slate-400 ">Gender</span><span className="block text-slate-500">male</span></div>
+                    <div className="border-r border-l border-slate-300 px-4 py-2"><span className="block text-slate-600 border-b border-slate-400 ">Aprox Rent</span><span className="block text-slate-500"> &#x20B9;8000</span></div>
+                    <div className="border-r border-l border-slate-300 px-4 py-2"><span className="block text-slate-600 border-b border-slate-400 ">Occupancy</span><span className="block text-slate-500">male</span></div>
+                    <div className="border-r border-l border-slate-300 px-4 py-2"><span className="block text-slate-600 border-b border-slate-400 ">Loking For</span><span className="block text-slate-500">male</span></div>
+
                 </div>
             </div>
             {/* flatmate card Body */}
 
             <div className="bg-yellow-200 max-w-4xl ">
-
+  <p className="h-1/3  md:text-xl text-md font-bold text-slate-500 p-1">Pictures</p>
                 <Carousel >
                     {image.map(r => (
-                        <img src={r} alt={r + "image"} />
+                        <img src={r} key={r + "image"} />
                     ))}
 
                 </Carousel>
@@ -52,7 +51,7 @@ const FlatmateHome = () => {
 
             <div className="p-4">
                 <p className="text-base font-bold leading-5 text-slate-700 border-b p-1" >Description :-</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et culpa, necessitatibus ad voluptatum sint odio sunt ipsa quibusdam, consequuntur saepe id doloremque. Praesentium nam aperiam atque, error recusandae assumenda alias!
+                <p className="text-md leading-4 md:text-md md:leading-5 text-blue-600">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et culpa, necessitatibus ad voluptatum sint odio sunt ipsa quibusdam, consequuntur saepe id doloremque. Praesentium nam aperiam atque, error recusandae assumenda alias!
                 </p>
             </div>
         </div>

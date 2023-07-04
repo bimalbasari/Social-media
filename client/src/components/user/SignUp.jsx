@@ -90,14 +90,7 @@ const Signup = ({ setAccount }) => {
       setError('Password and confirm password do not match');
       return;
     }
-    console.log(typeof (previewURL))
-    // const formData = new FormData();
-    // formData.append('firstName', firstName);
-    // formData.append('lastName', lastName);
-    // formData.append('picture', previewURL);
-    // formData.append('email', email);
-    // formData.append('mobile', mobile);
-    // formData.append('password', password);
+  
     const formData = { firstName, lastName, email, mobile, password, picture }
     try {
       const userCreate = await createAccount(formData)
