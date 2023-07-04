@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Lato&family=Playfair+Display&family=Roboto+Mono:ital@1&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto Mono', monospace;
+    /* font-family: 'Alex Brush', cursive; */
+    /* font-family: 'Lato', sans-serif; */
+    /* font-family: 'Playfair Display', serif; */
+}
+
+body {
+    background-color: gray;
+}

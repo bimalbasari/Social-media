@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { NavLink,useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import AddEvent from './AddEvent';
 import { selectUser } from "../features/index";
@@ -23,10 +23,10 @@ const Navbar = () => {
 
   return (
     <div>
-      <nav className="bg-white px-6 shadow md:flex md:items-center md:justify-between">
+      <nav className="bg-white px-4 shadow md:flex md:items-center md:justify-between">
         <div>
           <span className='text-2xl font-[Poppins]'>
-            <img src="./logo.jpg" alt="Logo" className='h-10 inline rounded-full' />
+            <img src="./logo.jpg" alt="Logo" className='h-10 inline rounded-full object-fill' />
             Social-Media
           </span>
           <span className='text-3xl cursor-pointer mx-2 md:hidden'>
@@ -46,14 +46,15 @@ const Navbar = () => {
             }} >Add Event</button>
 
           </li>
-          <li className="mx-3 my-4 md:my-0" >
-         { user && <img src={user.picture} alt="Logo" className='h-10 inline rounded-full' />}
-          </li>
+          {user && <li className="mx-3 my-0 md:my-0" >
+            <img src={user.picture} alt="Logo" className='h-10 inline rounded-full' />
+            <span className='block m-0'>{user.firstName}</span>
+          </li>}
         </ul>
 
       </nav>
 
-      {listing && <div className='m-auto  bg-cyan-700  h-full w-auto p-6 shadow '><AddEvent setListing={setListing}/> </div>}
+      {listing && <div className='m-auto  bg-cyan-700  h-full w-auto p-6 shadow '><AddEvent setListing={setListing} /> </div>}
 
     </div>
   );

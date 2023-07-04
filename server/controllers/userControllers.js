@@ -1,9 +1,9 @@
 const fs = require("fs");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const dotenv=require("dotenv")
-const User = require("../models/user.model");
-const Listing = require("../models/listing.modal")
+const dotenv = require("dotenv")
+
+
 
 dotenv.config();
 
@@ -71,10 +71,10 @@ const userLogin = async (req, res) => {
                 return res.status(401).json({ message: 'Authentication failed' });
             }
 
-            const {  firstName, lastName, mobile, email, picture } = user;
+            const { firstName, lastName, mobile, email, picture } = user;
 
             // Generate a JWT token
-            const token = jwt.sign({ userId: user._id },process.env.SERECTKEY);
+            const token = jwt.sign({ userId: user._id }, process.env.SERECTKEY);
 
             // Convert the base64-encoded image back to its original form
             const imageBuffer = Buffer.from(picture.image, 'base64');
@@ -90,36 +90,10 @@ const userLogin = async (req, res) => {
 };
 
 
-const userEvent = (req, res) => {
-    try {
-        let img = fs.readFileSync(req.file.path);
-        let encode_image = img.toString("base64");
-        const { location, price, category, description} = req.body;
-        console.log(req.body)
-
-        // Create a new listing using the Listing model
-        const newListing = new Listing({
-            location,
-            price,
-            category,
-            description,
-            picture: {
-                contentType: req.file.mimetype,
-                size: req.file.size,
-                image: encode_image,
-            }
-        });
-        newListing.save()
-        res.status(201).json(newListing);
-
-    } catch (error) {
-        console.log("error", error)
-        res.status(500).json({ error: 'An error occurred while creating the listing.' });
-    };
-}
 
 
-const index = async (req, res, next) => {
+
+const index = async (req, res) => {
     try {
 
         let users = await User.find()
@@ -136,9 +110,10 @@ const index = async (req, res, next) => {
 
 
 
+
 module.exports = {
     createUser,
     userLogin,
-    userEvent
+   
 }
 

@@ -29,8 +29,9 @@ export const createAccount = async (data) => {
 }
 
 export const userEvents = async (data, config) => {
+    console.log(data)
     try {
-        const userData = await axios.post(`${URL}/api/user/event`, data, {
+        const userData = await axios.post(`${URL}/api/user/newflatmate`, data, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 authorization: config

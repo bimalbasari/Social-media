@@ -1,7 +1,11 @@
 const mongoose = require('mongoose');
-
-const listingSchema = new mongoose.Schema({
-  user: Object,
+const User = require("./user.model")
+const flatMatesSchema = new mongoose.Schema({
+  userID: {
+    type: mongoose.Schema.ObjectId,
+    ref: User,
+    required: true
+  },
   location: {
     type: String,
     required: true,
@@ -31,6 +35,11 @@ const listingSchema = new mongoose.Schema({
   }
 }, { timestamps: true });
 
-const Listing = mongoose.model('Listing', listingSchema);
+const Flatmate = mongoose.model('Flatmate', flatMatesSchema);
 
-module.exports = Listing;
+module.exports = Flatmate;
+
+// {
+//   type: String,
+//   required: true,
+// },
