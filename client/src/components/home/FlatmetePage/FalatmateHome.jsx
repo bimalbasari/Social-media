@@ -1,4 +1,8 @@
-import Carousel from "../../item/Carousel"
+
+import Carousel from "../../item/Carousel";
+import User from "../../user/User";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../../features/index";
 
 let image = [
     "https://media.istockphoto.com/id/1365649825/photo/stylish-micro-apartment-for-one.jpg?s=1024x1024&w=is&k=20&c=ud_WjVjBsk1FTraUL4avh3ApSjSKsScu4ZH4JKRm6ds=",
@@ -7,10 +11,12 @@ let image = [
 ]
 
 const FlatmateHome = () => {
+    const user = useSelector(selectUser)
     return (
         <div className="bg-white  md: md:w-2/4 m-auto  h-full  border-double border-4 border-slate-700 mt-4 rounded-lg overflow-hidden">
             {/* flatMate card header */}
-            <div className="bg-white  drop-shadow-lg flex  items-center rounded-sm">
+            <User user={user} />
+            {/* <div className="bg-white  drop-shadow-lg flex  items-center rounded-sm">
                 <div className="h-16 w-20 flex items-center justify-center">
                     <img src="./logo.jpg" alt="" className="h-14  w-auto rounded-full"  />
                 </div>
@@ -23,9 +29,9 @@ const FlatmateHome = () => {
                     <div className="w-52">
                         <button className="bg-slate-300 hover:bg-blue-500 hover:text-white  w-10/12 rounded-lg p-2">Chat</button>
                     </div>
-                </div>
+                </div> 
 
-            </div>
+            </div>*/}
 
             <div className="py-2">
                 <div className="h-1/3 text-center md:text-3xl text-xl font-bold text-slate-500 p-1">Basic Info</div>
@@ -40,7 +46,7 @@ const FlatmateHome = () => {
             {/* flatmate card Body */}
 
             <div className="bg-yellow-200 max-w-4xl ">
-  <p className="h-1/3  md:text-xl text-md font-bold text-slate-500 p-1">Pictures</p>
+                <p className="h-1/3  md:text-xl text-md font-bold text-slate-500 p-1">Pictures</p>
                 <Carousel >
                     {image.map(r => (
                         <img src={r} key={r + "image"} />

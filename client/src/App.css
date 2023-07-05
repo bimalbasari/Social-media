@@ -4,9 +4,9 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Roboto Mono', monospace;
+    /* font-family: 'Roboto Mono', monospace; */
     /* font-family: 'Alex Brush', cursive; */
-    /* font-family: 'Lato', sans-serif; */
+    font-family: 'Lato', sans-serif;
     /* font-family: 'Playfair Display', serif; */
 }
 

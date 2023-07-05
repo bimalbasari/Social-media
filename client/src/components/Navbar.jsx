@@ -14,7 +14,7 @@ const Navbar = () => {
     if (user == null) {
       navgate("/login")
     }
-  })
+  },[user])
 
 
   const toggleMenu = () => {
@@ -24,11 +24,10 @@ const Navbar = () => {
   return (
     <div>
       <nav className="bg-white px-4  h-16 shadow md:flex md:items-center md:justify-between">
-        <div>
-          <span className='text-2xl font-[Poppins]'>
-            <img src="./logo.jpg" alt="Logo" className='h-10 inline rounded-full object-fill' />
-            Social Butterfly
-          </span>
+        <div className='h-10'>
+
+          <span className='text-3xl font-bold h-10 text-pink-600 ' style={{ fontFamily: "'Alex Brush', cursive" }}> <img src="./logo.jpg" alt="Logo" className='h-10 inline rounded-full object-fill' /> Butterfly</span>
+
           <span className='text-3xl cursor-pointer mx-2 md:hidden'>
             =
           </span>
@@ -52,11 +51,11 @@ const Navbar = () => {
           </li>}
         </ul>
 
-      </nav>
+      </nav >
 
       {listing && <div className='m-auto  bg-cyan-700  h-full w-auto p-6 shadow '><AddEvent setListing={setListing} /> </div>}
 
-    </div>
+    </div >
   );
 };
 

@@ -80,7 +80,7 @@ const Login = ({ setAccount }) => {
   };
 
   return (
-    <div className="flex justify-center items-center p-8 h-full bg-gray-100">
+    <div className="flex justify-center items-center p-8 md:h-full h-screen bg-gray-100">
       <div className="bg-blue-100 shadow-md rounded-md p-8 w-96">
         <h2 className="text-2xl font-bold mb-6 text-center">Login </h2>
         {error &&

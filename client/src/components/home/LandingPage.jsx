@@ -1,5 +1,7 @@
-import EventPageHome from "./EventPage/EventPageHome"
+
 import { NavLink } from "react-router-dom"
+import EventHome from "./EventPage/EventHome"
+import FlatmateHome from "./FlatmetePage/FalatmateHome"
 
 const LandingPage = () => {
 
@@ -15,7 +17,8 @@ const LandingPage = () => {
           </li>
         </ul>
       </header>
-      <EventPageHome />
+       <EventHome/>
+       <FlatmateHome/>
     </div>
   )
 }

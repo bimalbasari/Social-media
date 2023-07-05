@@ -1,11 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import User from "./components/user/User"
-import Home from "./components/home/LandingPage"
-import Footer from "./components/Footer/Footer"
-import './App.css'
+import './App.css';
 import Navbar from "./components/Navbar";
-import FlatmateHome from "./components/home/FlatmetePage/FalatmateHome";
-import EventPageHome from "./components/home/EventPage/EventPageHome";
+import Home from "./components/home/LandingPage";
+import Footer from "./components/Footer/Footer";
+import Resister from "./components/user/Resister";
 
 
 function App() {
@@ -15,7 +13,7 @@ function App() {
     <BrowserRouter>
       <Navbar />
       <Routes>
-        <Route path="/login" element={<User />} />
+        <Route path="/login" element={<Resister />} />
         <Route path="/" element={<Home />} />
       </Routes>
       <Footer />
