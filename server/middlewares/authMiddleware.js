@@ -25,9 +25,9 @@ const authMiddleware = async (req, res, next) => {
       return res.status(404).json({ error: 'User not found' });
     }
     // Pass the user to the next middleware or route handler
-    // req.body = { ...user: user._id };
+  
     req.userId=user._id;
-    // console.log(req.body, "middlew")
+   
     next();
   } catch (error) {
     // Invalid token

@@ -30,7 +30,6 @@ export const createAccount = async (data) => {
 }
 
 export const userEvents = async (data, config) => {
-    console.log(data)
     try {
         const userData = await axios.post(`${URL}/api/user/newflatmate`, data, {
             headers: {
@@ -46,3 +45,17 @@ export const userEvents = async (data, config) => {
     }
 }
 
+export const createPost = async (data, config) => {
+    console.log(data)
+    try {
+         await axios.post(`${URL}/api/user/createevent`, data, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                authorization: config
+            },
+        });
+    } catch (error) {
+        console.log("createPost", error)
+
+    }
+}

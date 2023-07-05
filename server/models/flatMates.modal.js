@@ -39,7 +39,3 @@ const Flatmate = mongoose.model('Flatmate', flatMatesSchema);
 
 module.exports = Flatmate;
 
-// {
-//   type: String,
-//   required: true,
-// },
