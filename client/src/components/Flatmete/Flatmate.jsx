@@ -1,8 +1,8 @@
 
-import Carousel from "../../item/Carousel";
-import User from "../../user/User";
+import Carousel from "../Item/Carousel";
+import User from "../User/User";
 import { useSelector } from "react-redux";
-import { selectUser } from "../../../features/index";
+import { selectUser } from "../../features/index";
 
 let image = [
     "https://media.istockphoto.com/id/1365649825/photo/stylish-micro-apartment-for-one.jpg?s=1024x1024&w=is&k=20&c=ud_WjVjBsk1FTraUL4avh3ApSjSKsScu4ZH4JKRm6ds=",
@@ -10,7 +10,7 @@ let image = [
     "https://media.istockphoto.com/id/1460530527/photo/light-living-room-interior-with-eating-table-and-couch-panoramic-window.jpg?s=1024x1024&w=is&k=20&c=4cNrGiMFoG7Gaxxy7P_bN6_qAhYoPboWb9UxSmBl4A4="
 ]
 
-const FlatmateHome = () => {
+const Flatmate = () => {
     const user = useSelector(selectUser)
     return (
         <div className="bg-white  md: md:w-2/4 m-auto  h-full  border-double border-4 border-slate-700 mt-4 rounded-lg overflow-hidden">
@@ -64,4 +64,4 @@ const FlatmateHome = () => {
     )
 }
 
-export default FlatmateHome
+export default Flatmate

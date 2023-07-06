@@ -70,7 +70,7 @@ const Login = ({ setAccount }) => {
         }
 
         dispatch(login(newUser))
-        navigate("/")
+        navigate("/home")
       }
 
     } catch (error) {

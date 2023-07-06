@@ -14,7 +14,7 @@ const flatMatesSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  category: {
+  LokingFor: {
     type: String,
     required: true,
   },

@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { userEvents } from "../services/Api";
-import { selectUser } from "../features/index"
+import { userEvents } from "../../services/Api";
+import { selectUser } from "../../features/index"
 
-const AddEvent = ({ setListing }) => {
+const AddFlat = ({ setListing }) => {
 
   const [location, setLocation] = useState('');
   const [price, setPrice] = useState('');
-  const [category, setCategory] = useState('');
+  const [lokingFor, setLokingFor] = useState('');
   const [description, setDescription] = useState('');
   const [picture, setPicture] = useState("");
   const [previewURL, setPreviewURL] = useState('');
@@ -23,7 +23,7 @@ const AddEvent = ({ setListing }) => {
 
 
   const handleCategoryChange = (event) => {
-    setCategory(event.target.value);
+    setLokingFor(event.target.value);
   };
 
   const handleDescriptionChange = (event) => {
@@ -54,7 +54,7 @@ const AddEvent = ({ setListing }) => {
 
 
     const formData = {
-      location, price, picture, description, category
+      location, price, picture, lokingFor, description
     }
 
     const property = await userEvents(formData, config)
@@ -63,7 +63,7 @@ const AddEvent = ({ setListing }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-sm mx-auto">
+    <form onSubmit={handleSubmit} className="max-w-sm mx-auto ">
 
       <div className="mb-4">
         <input
@@ -85,10 +85,10 @@ const AddEvent = ({ setListing }) => {
       </div>
       <div className="mb-4">
         <select
-          value={category}
+          value={lokingFor}
           onChange={handleCategoryChange}
           className="w-full  rounded py-2 px-3 bg-white text-blue-500 font-bold duration-200">
-          <option value="" >Select Partner</option>
+          <option value="" >Loking For</option>
           <option value="Male">Male</option>
           <option value="Female">Female</option>
           <option value="Any">Any</option>
@@ -118,4 +118,4 @@ const AddEvent = ({ setListing }) => {
   );
 };
 
-export default AddEvent;
+export default AddFlat;

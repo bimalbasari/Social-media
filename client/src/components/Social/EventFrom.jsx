@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useSelector } from "react-redux";
 import { createPost } from '../../../services/Api';
-import { selectUser } from "../../../features/index";
+import { selectUser } from "../../features/index";
+
 
 const NewEventForm = () => {
     const [content, setContent] = useState('');

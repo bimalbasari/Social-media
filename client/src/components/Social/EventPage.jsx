@@ -2,8 +2,8 @@ import { SlLike } from "react-icons/sl"
 import { AiOutlineComment } from "react-icons/ai"
 import { PiShareFatLight } from "react-icons/pi"
 import { useSelector } from "react-redux";
-import { selectUser } from "../../../features/index";
-import User from "../../user/User";
+import { selectUser } from "../../features/index";
+import User from "../User/User";
 
 
 const EventPage = () => {

@@ -1,22 +1,22 @@
 const User = require("../models/user.model");
 const Flatmate = require("../models/flatMates.modal");
 
-const addNewFlat =async (req, res) => {
+const addNewFlat = async (req, res) => {
     try {
         let img = fs.readFileSync(req.file.path);
         let encode_image = img.toString("base64");
-        const { location, price, category, description } = req.body;
+        const { location, price, category, lokingFor } = req.body;
 
         const userID = req.userId
         // console.log(user, "user_id")
 
         // Create a new listing using the Listing model
-        const newListing = new Flatmate({
+        const newFlat = new Flatmate({
             userID,
             location,
             price,
             category,
-            description,
+            lokingFor,
             picture: {
                 contentType: req.file.mimetype,
                 size: req.file.size,
@@ -24,8 +24,8 @@ const addNewFlat =async (req, res) => {
             }
         });
 
-       await  newListing.save()
-        res.status(201).json(newListing);
+        await newFlat.save()
+        res.status(201).json(newFlat);
 
     } catch (error) {
         console.log("error", error)
