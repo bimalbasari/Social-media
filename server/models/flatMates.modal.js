@@ -22,7 +22,7 @@ const flatMatesSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  picture: [{
+  picture: {
     contentType: {
       type: String,
     },
@@ -32,7 +32,7 @@ const flatMatesSchema = new mongoose.Schema({
     image: {
       type: String,
     },
-  },]
+  },
 
 }, { timestamps: true });
 

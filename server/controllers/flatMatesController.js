@@ -8,8 +8,7 @@ const addNewFlat = async (req, res) => {
         const { location, price, description, lokingFor } = req.body;
 
         const userID = req.userId
-
-        const uploadedFiles = req.files.map((file) => {
+        const pictures = req.files.map((file) => {
             let img = fs.readFileSync(file.path);
             let encode_image = img.toString("base64");
             return {
@@ -18,17 +17,15 @@ const addNewFlat = async (req, res) => {
                 image: encode_image,
             }
         });
-
-    
+      
         // Create a new listing using the Listing model
-        
         const newFlat = new Flatmate({
             userID,
             location,
             price,
             description,
             lokingFor,
-            picture: uploadedFiles.slice(0, 4),
+            picture: pictures
         });
 
         await newFlat.save()
