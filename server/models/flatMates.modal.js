@@ -14,7 +14,7 @@ const flatMatesSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  LokingFor: {
+  lokingFor: {
     type: String,
     required: true,
   },
@@ -22,7 +22,7 @@ const flatMatesSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  picture: {
+  picture: [{
     contentType: {
       type: String,
     },
@@ -32,7 +32,8 @@ const flatMatesSchema = new mongoose.Schema({
     image: {
       type: String,
     },
-  }
+  },]
+
 }, { timestamps: true });
 
 const Flatmate = mongoose.model('Flatmate', flatMatesSchema);

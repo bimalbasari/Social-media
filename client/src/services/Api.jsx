@@ -29,16 +29,15 @@ export const createAccount = async (data) => {
 
 }
 
-export const userEvents = async (data, config) => {
+export const addFlat = async (data, config) => {
     try {
-        const userData = await axios.post(`${URL}/api/user/newflatmate`, data, {
+        const flatAdded = await axios.post(`${URL}/api/user/newflatmate`, data, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 authorization: config
             },
         });
-        // document.cookies = `token=${userData.data.token}`
-        // return userData
+        console.log(flatAdded)
     } catch (error) {
         console.log("userEvents", error)
 
@@ -48,7 +47,7 @@ export const userEvents = async (data, config) => {
 export const createPost = async (data, config) => {
     console.log(data)
     try {
-         await axios.post(`${URL}/api/user/createevent`, data, {
+        await axios.post(`${URL}/api/user/createevent`, data, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 authorization: config

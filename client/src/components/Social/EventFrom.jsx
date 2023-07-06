@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useSelector } from "react-redux";
-import { createPost } from '../../../services/Api';
+import { createPost } from '../../services/Api';
 import { selectUser } from "../../features/index";
 
 
-const NewEventForm = () => {
+const EventForm = () => {
     const [content, setContent] = useState('');
     const [picture, setPicture] = useState("");
     const [previewURL, setPreviewURL] = useState('');
@@ -89,4 +89,4 @@ const NewEventForm = () => {
     );
 };
 
-export default NewEventForm;
+export default EventForm;

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { userEvents } from "../../services/Api";
+import { addFlat } from "../../services/Api";
 import { selectUser } from "../../features/index"
 
 const AddFlat = ({ setListing }) => {
@@ -9,7 +9,8 @@ const AddFlat = ({ setListing }) => {
   const [price, setPrice] = useState('');
   const [lokingFor, setLokingFor] = useState('');
   const [description, setDescription] = useState('');
-  const [picture, setPicture] = useState("");
+  const [pictures, setPictures] = useState([]);
+ 
   const [previewURL, setPreviewURL] = useState('');
   const user = useSelector(selectUser)
 
@@ -31,33 +32,33 @@ const AddFlat = ({ setListing }) => {
   };
 
   const handleImageChange = (e) => {
-
-    let selectedPicture = e.target.files[0]
-    setPicture(selectedPicture);
-
-    if (selectedPicture) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreviewURL(reader.result);
-      };
-      reader.readAsDataURL(selectedPicture);
-    }
-
+    let selectedPicture = e.target.files;
+    // let selectedPicture = e.target.files[0]
+    const imageArray = Array.from(selectedPicture).map((file) =>
+    setPictures(file)
+  );
+   
+    // if (selectedPicture) {
+    //   const reader = new FileReader();
+    //   reader.onloadend = () => {
+    //     setPreviewURL(reader.result);
+    //   };
+    //   reader.readAsDataURL(selectedPicture);
+    // }
 
   };
 
   const handleSubmit = async (event) => {
 
     event.preventDefault();
-
+    console.log(pictures)
     const config = `Bearer ${user.token}`;
 
-
     const formData = {
-      location, price, picture, lokingFor, description
+      location, price, pictures,  lokingFor, description
     }
 
-    const property = await userEvents(formData, config)
+    const property = await addFlat(formData, config)
     // setListing(false)
     // Perform any necessary submission logic here
   };
@@ -107,8 +108,10 @@ const AddFlat = ({ setListing }) => {
           type="file"
           onChange={handleImageChange}
           className="bg-white w-full border rounded py-2 px-3"
+          multiple
         />
       </div>
+
       <div className='m-auto'>
         <button type="submit" className="bg-white hover:bg-blue-500 text-blue-500 duration-300 hover:text-white font-bold py-2 px-4 rounded">
           Submit
