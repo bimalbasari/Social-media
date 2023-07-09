@@ -4,33 +4,43 @@ const Flatmate = require("../models/flatMates.modal");
 
 const addNewFlat = async (req, res) => {
     try {
-
+        const userID = req.userId;
         const { location, price, description, lokingFor } = req.body;
 
-        const userID = req.userId
-        const pictures = req.files.map((file) => {
-            let img = fs.readFileSync(file.path);
-            let encode_image = img.toString("base64");
-            return {
-                contentType: file.mimetype,
-                size: file.size,
-                image: encode_image,
-            }
-        });
-      
+
         // Create a new listing using the Listing model
-        const newFlat = new Flatmate({
-            userID,
-            location,
-            price,
-            description,
-            lokingFor,
-            picture: pictures
-        });
-
-        await newFlat.save()
-        res.status(201).json(newFlat);
-
+        // const newFlat = new Flatmate({
+        //     userID,
+        //     location,
+        //     price,
+        //     description,
+        //     lokingFor,
+        //     pictures: [
+        //         {
+        //             contentType: req.files[0].mimetype,
+        //             size: req.files[0].size,
+        //             image: fs.readFileSync(req.files[0].path).toString("base64"),
+        //         },
+        //         {
+        //             contentType: req.files[1].mimetype,
+        //             size: req.files[1].size,
+        //             image: fs.readFileSync(req.files[1].path).toString("base64"),
+        //         },
+        //         {
+        //             contentType: req.files[2].mimetype,
+        //             size: req.files[2].size,
+        //             image: fs.readFileSync(req.files[2].path).toString("base64"),
+        //         },
+        //     ]
+        // });
+        // console.log(req.files[0].mimetype)
+        // console.log(req.files[1].mimetype)
+        // console.log(req.files[2].mimetype)
+        console.log(req.files.length)
+    
+        // await newFlat.save()
+        res.status(201).json({message:req.files});
+  
     } catch (error) {
         console.log("error", error)
         res.status(500).json({ error: 'An error occurred while creating the listing.' });

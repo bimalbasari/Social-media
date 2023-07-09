@@ -30,6 +30,9 @@ export const createAccount = async (data) => {
 }
 
 export const addFlat = async (data, config) => {
+    const {pictures}=data
+    console.log(pictures)
+    console.log(data)
     try {
         const flatAdded = await axios.post(`${URL}/api/user/newflatmate`, data, {
             headers: {

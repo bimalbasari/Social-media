@@ -9,9 +9,9 @@ const flatMatesController = require("../controllers/flatMatesController")
 const router = express.Router();
 
 const storage = multer.diskStorage({
-  // destination: function (req, file, cb) {
-  //   cb(null, "uploads");
-  // },
+  destination: function (req, file, cb) {
+    cb(null, "uploads");
+  },
 
   filename: function (req, file, cb) {
     cb(null, Date.now() + "-" + file.originalname);
@@ -29,7 +29,7 @@ router.post('/login', userController.userLogin);
 
 // Listings
 
-router.post('/newflatmate', authMiddleware, upload.array('pictures', 4), flatMatesController.addNewFlat);
+router.post('/newflatmate',authMiddleware, upload.array('pictures', 3), flatMatesController.addNewFlat);
 
 router.get("/flatmate", flatMatesController.flatMatesFatch);
 

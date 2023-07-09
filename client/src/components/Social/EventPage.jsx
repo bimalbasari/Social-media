@@ -1,13 +1,29 @@
-import { SlLike } from "react-icons/sl"
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { FcLike, FcLikePlaceholder } from "react-icons/fc"
 import { AiOutlineComment } from "react-icons/ai"
 import { PiShareFatLight } from "react-icons/pi"
-import { useSelector } from "react-redux";
 import { selectUser } from "../../features/index";
 import User from "../User/User";
+import Comment from "./Comment"
 
 
 const EventPage = () => {
-    const user = useSelector(selectUser)
+    const user = useSelector(selectUser);
+    const [like, setLike] = useState(false);
+    const [comment, setComment] = useState(false);
+
+    const onLike = () => {
+        setLike(true)
+    }
+    const onComment = () => {
+        if (!comment) {
+            setComment(true)
+        } else {
+            setComment(false)
+        }
+
+    }
 
     return (
         <div className="bg-white  md:w-2/4 m-auto  h-full  border-double border-4 border-slate-700 mt-4 rounded-lg overflow-hidden">
@@ -29,21 +45,22 @@ const EventPage = () => {
                     <div className="font-medium text-sm text-cyan-800  mx-2">NAN</div>
                 </div>
                 <div className="h-12 flex items-center justify-between px-12 ">
-                    <div className="flex items-center cursor-pointer">
-                        <button className="font-bold text-xl text-cyan-800 ">{<SlLike />}  </button>
+                    <div className="flex items-center cursor-pointer" onClick={onLike}>
+                        <button className="font-bold text-xl text-cyan-800">
+                            {like ? <FcLike /> : <FcLikePlaceholder />}
+                        </button>
                         <span className="font-medium text-sm text-cyan-800  mx-2">Like</span>
                     </div>
-                    <div className="flex items-center cursor-pointer">
+                    <div className="flex items-center cursor-pointer" onClick={onComment}>
                         <button className="font-bold text-xl text-cyan-800 ">{<AiOutlineComment />}  </button>
-                        <span className="font-medium text-sm text-cyan-800  mx-2">Comment</span>
+                        <span className="font-medium text-sm text-cyan-800  mx-2" >Comment</span>
                     </div>
                     <div className="flex items-center focus:outline-none disabled:opacity-25 cursor-pointer">
                         <button className="font-bold text-xl text-cyan-800 ">{<PiShareFatLight />}  </button>
                         <span className="font-medium text-sm text-cyan-800 disable mx-2 ">Repost</span>
                     </div>
-
-
                 </div>
+                {comment && <Comment setComment={setComment} />}
             </div>
 
         </div>

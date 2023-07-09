@@ -10,11 +10,11 @@ const Navbar = () => {
   const user = useSelector(selectUser)
   const navgate = useNavigate()
 
-  useEffect(() => {
-    if (user == null) {
-      navgate("/login")
-    }
-  },[user])
+  // useEffect(() => {
+  //   if (user == null) {
+  //     navgate("/login")
+  //   }
+  // },[user])
 
 
   const toggleMenu = () => {
@@ -26,7 +26,7 @@ const Navbar = () => {
       <nav className="bg-white px-4  h-16 shadow md:flex md:items-center md:justify-between">
         <div className='h-10'>
 
-          <span className='text-3xl font-bold h-10 text-pink-600 ' style={{ fontFamily: "'Alex Brush', cursive" }}> <img src="../logo.jpg" alt="Logo" className='h-10 inline rounded-full object-fill' /> Butterfly</span>
+          <span className='text-3xl font-bold h-10 text-pink-600 ' style={{ fontFamily: "'Alex Brush', cursive" }}>Butterfly</span>
 
           <span className='text-3xl cursor-pointer mx-2 md:hidden'>
             =
@@ -45,10 +45,10 @@ const Navbar = () => {
             }} >Add Flat </button>
 
           </li>
-          {user && <li className='text-md font-[Poppins]'>
-            <img src={user.picture} alt="Profile Picture" className=' h-8 inline rounded-full object-fill mx-3' />
-            <span>{user.firstName}</span>
-          </li>}
+          <li className='text-md font-[Poppins]'>
+            <img src={user?user.picture:"../dummy-user.jpg"} alt="Profile Picture" className=' h-8 inline rounded-full object-fill mx-1' />
+            <span>{user?user.firstName:"User"}</span>
+          </li>
         </ul>
 
       </nav >

@@ -10,7 +10,10 @@ const AddFlat = ({ setListing }) => {
   const [lokingFor, setLokingFor] = useState('');
   const [description, setDescription] = useState('');
   const [pictures, setPictures] = useState([]);
- 
+  const [picture0, setPictures0] = useState("");
+  const [picture1, setPictures1] = useState("");
+  const [picture2, setPictures2] = useState("");
+
   const [previewURL, setPreviewURL] = useState('');
   const user = useSelector(selectUser)
 
@@ -30,14 +33,16 @@ const AddFlat = ({ setListing }) => {
   const handleDescriptionChange = (event) => {
     setDescription(event.target.value);
   };
-
   const handleImageChange = (e) => {
-    let selectedPicture = e.target.files;
+    const selectedPictures = e.target.files;
+    setPictures(Array.from(selectedPictures));
+  };
+  const handleImageChange0 = (e) => {
+    let selectedPicture = e.target.files[0];
     // let selectedPicture = e.target.files[0]
-    const imageArray = Array.from(selectedPicture).map((file) =>
-    setPictures(file)
-  );
-   
+    setPictures0(selectedPicture)
+
+
     // if (selectedPicture) {
     //   const reader = new FileReader();
     //   reader.onloadend = () => {
@@ -48,16 +53,24 @@ const AddFlat = ({ setListing }) => {
 
   };
 
+  const handleImageChange1 = (e) => {
+    let selectedPicture = e.target.files[0];
+    // let selectedPicture = e.target.files[0]
+    setPictures1(selectedPicture)
+  }
+  const handleImageChange2 = (e) => {
+    let selectedPicture = e.target.files[0];
+    // let selectedPicture = e.target.files[0]
+    setPictures2(selectedPicture)
+  }
+
   const handleSubmit = async (event) => {
-
     event.preventDefault();
-    console.log(pictures)
     const config = `Bearer ${user.token}`;
-
     const formData = {
-      location, price, pictures,  lokingFor, description
+      location, price, pictures, lokingFor, description
     }
-
+ console.log(pictures)
     const property = await addFlat(formData, config)
     // setListing(false)
     // Perform any necessary submission logic here
@@ -111,7 +124,7 @@ const AddFlat = ({ setListing }) => {
           multiple
         />
       </div>
-
+     
       <div className='m-auto'>
         <button type="submit" className="bg-white hover:bg-blue-500 text-blue-500 duration-300 hover:text-white font-bold py-2 px-4 rounded">
           Submit
