@@ -35,10 +35,10 @@ const eventSchema = new mongoose.Schema({
                 type: mongoose.Schema.ObjectId,
                 ref: 'User',
             },
-            comment: {
-                type: String, 
-            }
-        }
+            message: {
+                type: String,
+            },
+        },{ timestamps: true }
     ]
 }, { timestamps: true })
 

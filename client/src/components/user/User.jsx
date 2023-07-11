@@ -1,9 +1,11 @@
 
 const time = new Date().toJSON();
 const User = ({ user }) => {
+
+
+    console.log(user, "from User page")
     if (user) {
         return (
-
             <div className="bg-white  drop-shadow-lg flex  items-center rounded-sm">
                 <div className="h-16 w-16 flex items-center justify-center">
                     <img src={user.picture} alt="" className="h-12  w-auto rounded-full" />

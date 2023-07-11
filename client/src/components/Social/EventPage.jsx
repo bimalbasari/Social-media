@@ -3,32 +3,52 @@ import { useSelector } from "react-redux";
 import { FcLike, FcLikePlaceholder } from "react-icons/fc"
 import { AiOutlineComment } from "react-icons/ai"
 import { PiShareFatLight } from "react-icons/pi"
-import { selectUser } from "../../features/index";
+import { selectUser } from "../../features/index";;
 import User from "../User/User";
-import Comment from "./Comment"
+import Comment from "./Comment";
+import { likePost, getAllLike, getAllcomment } from "../../services/Api"
 
 
-const EventPage = () => {
+const EventPage = ({ data }) => {
     const user = useSelector(selectUser);
     const [like, setLike] = useState(false);
-    const [comment, setComment] = useState(false);
+    const [commentBox, setCommentBox] = useState(false);
+    const config = `Bearer ${user.token}`;
 
-    const onLike = () => {
+    const onLike = async () => {
+        await likePost({ postId: data._id }, config)
         setLike(true)
     }
-    const onComment = () => {
-        if (!comment) {
-            setComment(true)
+    const showLike = async () => {
+        await getAllLike(data._id, config)
+    }
+    const showComments = async () => {
+        await getAllcomment(data._id, config)
+    }
+
+    const onComment = async () => {
+        if (!commentBox) {
+            setCommentBox(true)
         } else {
-            setComment(false)
+            setCommentBox(false)
         }
 
+
     }
+    const { firstName, lastName, picture } = data.postBy;
+    // if (picture) {
+    //     const reader = new FileReader();
+    //     reader.onloadend = () => {
+    //         setPostUser(reader.result);
+    //     };
+    //     reader.readAsDataURL(picture);
+    // }
+    console.log(data.postBy,"from social page")
 
     return (
         <div className="bg-white  md:w-2/4 m-auto  h-full  border-double border-4 border-slate-700 mt-4 rounded-lg overflow-hidden">
             {/* flatMate card header */}
-            <User user={user} />
+            <User user={data.postBy} />
             <div className="p-4">
 
                 <p className="text-md leading-4 md:text-md md:leading-5 text-blue-600">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et culpa, necessitatibus ad voluptatum sint odio sunt ipsa quibusdam, consequuntur saepe id doloremque. Praesentium nam aperiam atque, error recusandae assumenda alias!
@@ -40,18 +60,22 @@ const EventPage = () => {
             </div>
             <div>
                 <div className="flex items-center justify-between px-12 border-b-2 m-1">
-                    <div className="font-medium text-sm text-cyan-800  mx-2 cursor-pointer">1990</div>
-                    <div className="font-medium text-sm text-cyan-800  mx-2 cursor-pointer">1990</div>
+                    <div className="font-medium text-sm text-cyan-800  mx-2 cursor-pointer" onClick={showLike}>1990</div>
+                    <div className="font-medium text-sm text-cyan-800  mx-2 cursor-pointer" onClick={showComments}>1990</div>
                     <div className="font-medium text-sm text-cyan-800  mx-2">NAN</div>
                 </div>
+
+
                 <div className="h-12 flex items-center justify-between px-12 ">
+                    {/* Post like section */}
                     <div className="flex items-center cursor-pointer" onClick={onLike}>
                         <button className="font-bold text-xl text-cyan-800">
                             {like ? <FcLike /> : <FcLikePlaceholder />}
                         </button>
                         <span className="font-medium text-sm text-cyan-800  mx-2">Like</span>
                     </div>
-                    <div className="flex items-center cursor-pointer" onClick={onComment}>
+                    {/* Post comment box */}
+                    <div className="flex items-center cursor-pointer" onClick={setCommentBox}>
                         <button className="font-bold text-xl text-cyan-800 ">{<AiOutlineComment />}  </button>
                         <span className="font-medium text-sm text-cyan-800  mx-2" >Comment</span>
                     </div>
@@ -60,7 +84,7 @@ const EventPage = () => {
                         <span className="font-medium text-sm text-cyan-800 disable mx-2 ">Repost</span>
                     </div>
                 </div>
-                {comment && <Comment setComment={setComment} />}
+                {commentBox && <Comment user={user} data={data} />}
             </div>
 
         </div>

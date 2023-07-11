@@ -1,28 +1,39 @@
-
-import { createSlice, combineReducers, createAsyncThunk } from "@reduxjs/toolkit"
-
-
+import { createSlice, combineReducers } from "@reduxjs/toolkit";
 
 export const userSlice = createSlice({
-    name: 'user',
-    initialState: {
-        value: JSON.parse(localStorage.getItem('user')) ? JSON.parse(localStorage.getItem('user')).user : null,
-
+  name: 'user',
+  initialState: {
+    value: JSON.parse(localStorage.getItem('user')) ? JSON.parse(localStorage.getItem('user')).user : null,
+  },
+  reducers: {
+    login: (state, action) => {
+      state.value = action.payload;
+      localStorage.setItem('user', JSON.stringify({ user: action.payload }));
     },
-    reducers: {
-        login: (state, action) => {
-            state.value = action.payload;
-            
-        }
-    }
-})
+  },
+});
+
+export const eventSlice = createSlice({
+  name: 'event',
+  initialState: {
+    value: [],
+  },
+  reducers: {
+    addEvents: (state, action) => {
+      state.value = action.payload;
+    },
+  },
+});
 
 export const { login } = userSlice.actions;
+export const { addEvents } = eventSlice.actions;
 
+const rootReducer = combineReducers({
+  user: userSlice.reducer,
+  event: eventSlice.reducer,
+});
 
-const rootReducers = combineReducers({
-    user: userSlice.reducer
-})
+export const selectUser = (state) => state.user.value;
+export const selectEvent = (state) => state.event.value;
 
-export const selectUser=(state)=>state.user.value;
-export default rootReducers;
+export default rootReducer;

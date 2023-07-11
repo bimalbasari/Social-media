@@ -7,7 +7,6 @@ const addNewFlat = async (req, res) => {
         const userID = req.userId;
         const { location, price, description, lokingFor } = req.body;
 
-
         // Create a new listing using the Listing model
         // const newFlat = new Flatmate({
         //     userID,
@@ -33,13 +32,13 @@ const addNewFlat = async (req, res) => {
         //         },
         //     ]
         // });
-        // console.log(req.files[0].mimetype)
+    
+        console.log(req.files)
         // console.log(req.files[1].mimetype)
         // console.log(req.files[2].mimetype)
-        console.log(req.files.length)
     
         // await newFlat.save()
-        res.status(201).json({message:req.files});
+        // res.status(201).json({message:file});
   
     } catch (error) {
         console.log("error", error)
@@ -82,10 +81,12 @@ const flatMatesFatch = async (req, res) => {
 
 
 
+
 module.exports = {
 
     addNewFlat,
-    flatMatesFatch
+    flatMatesFatch,
+
 }
 
 

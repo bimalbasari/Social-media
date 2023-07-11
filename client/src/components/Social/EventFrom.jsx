@@ -45,6 +45,7 @@ const EventForm = ({setisFromOpen}) => {
                 // setContent('');
                 // setPicture("");
                 // setPreviewURL("");
+                setisFromOpen(false);
             } catch (err) {
             }
         }
@@ -61,7 +62,7 @@ const EventForm = ({setisFromOpen}) => {
                 <div  className="flex justify-end" ><span onClick={onEventAdd}><GrFormClose /></span></div>
                 <div className="border-b border-gray-400 pb-4">
                     <textarea
-                        className=" resize-none bg-transparent focus:outline-none first-letter:capitalize font-sarif"
+                        className=" resize-none bg-transparent focus:outline-none first-letter:capitalize font-sarif w-full"
                         rows="3"
                         placeholder="What's on your mind?"
                         value={content}

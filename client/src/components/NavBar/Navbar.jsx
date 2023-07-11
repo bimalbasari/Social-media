@@ -3,18 +3,27 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import AddFlat from '../Flatmete/AddFlat';
 import { selectUser } from "../../features/index";
-
+import { useDispatch } from 'react-redux';
+import { login } from "../../features/index.jsx";
 const Navbar = () => {
   const [listing, setListing] = useState(false)
   const [isOpen, setIsOpen] = useState(false);
   const user = useSelector(selectUser)
   const navgate = useNavigate()
+  const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   if (user == null) {
-  //     navgate("/login")
-  //   }
-  // },[user])
+  useEffect(() => {
+    if (!user) {
+      if (JSON.parse(localStorage.getItem('user'))) {
+        dispatch(login(JSON.parse(localStorage.getItem('user')).user))
+      } else {
+        navgate("/login")
+      }
+    } else {
+      navgate("/home")
+    }
+
+  }, [user])
 
 
   const toggleMenu = () => {
@@ -46,8 +55,8 @@ const Navbar = () => {
 
           </li>
           <li className='text-md font-[Poppins]'>
-            <img src={user?user.picture:"../dummy-user.jpg"} alt="Profile Picture" className=' h-8 inline rounded-full object-fill mx-1' />
-            <span>{user?user.firstName:"User"}</span>
+            <img src={user ? user.picture : "../dummy-user.jpg"} alt="image" className=' h-8 inline rounded-full object-fill mx-1' />
+            <span>{user ? user.firstName : "User"}</span>
           </li>
         </ul>
 

@@ -34,15 +34,9 @@ const AddFlat = ({ setListing }) => {
     setDescription(event.target.value);
   };
   const handleImageChange = (e) => {
-    const selectedPictures = e.target.files;
-    setPictures(Array.from(selectedPictures));
-  };
-  const handleImageChange0 = (e) => {
-    let selectedPicture = e.target.files[0];
-    // let selectedPicture = e.target.files[0]
-    setPictures0(selectedPicture)
-
-
+    const selectedFiles = e.target.files;
+    setPictures([...pictures, ...selectedFiles]);
+  
     // if (selectedPicture) {
     //   const reader = new FileReader();
     //   reader.onloadend = () => {
@@ -53,24 +47,25 @@ const AddFlat = ({ setListing }) => {
 
   };
 
-  const handleImageChange1 = (e) => {
-    let selectedPicture = e.target.files[0];
-    // let selectedPicture = e.target.files[0]
-    setPictures1(selectedPicture)
-  }
-  const handleImageChange2 = (e) => {
-    let selectedPicture = e.target.files[0];
-    // let selectedPicture = e.target.files[0]
-    setPictures2(selectedPicture)
-  }
+  // const handleImageChange1 = (e) => {
+  //   let selectedPicture = e.target.files[0];
+  //   // let selectedPicture = e.target.files[0]
+  //   setPictures1(selectedPicture)
+  // }
+  // const handleImageChange2 = (e) => {
+  //   let selectedPicture = e.target.files[0];
+  //   // let selectedPicture = e.target.files[0]
+  //   setPictures2(selectedPicture)
+  // }
 
+ 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const config = `Bearer ${user.token}`;
     const formData = {
-      location, price, pictures, lokingFor, description
+      location, price,  lokingFor, description,pictures
     }
- console.log(pictures)
+
     const property = await addFlat(formData, config)
     // setListing(false)
     // Perform any necessary submission logic here
@@ -118,6 +113,7 @@ const AddFlat = ({ setListing }) => {
       </div>
       <div className="mb-4">
         <input
+        name='pictures'
           type="file"
           onChange={handleImageChange}
           className="bg-white w-full border rounded py-2 px-3"
