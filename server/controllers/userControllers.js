@@ -2,7 +2,7 @@ const fs = require("fs");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const dotenv = require("dotenv");
-const User =require("../models/user.model")
+const User = require("../models/user.model")
 
 
 
@@ -11,7 +11,6 @@ dotenv.config();
 const createUser = async (req, res) => {
     try {
         let img = fs.readFileSync(req.file.path);
-        let encode_image = img.toString("base64");
         const {
             firstName,
             lastName,
@@ -20,7 +19,6 @@ const createUser = async (req, res) => {
             password,
         } = req.body;
 
-        console.log(req.body, "hello")
         const existingUser = await User.findOne({ email });
 
         if (existingUser) {
@@ -40,11 +38,7 @@ const createUser = async (req, res) => {
             mobile,
             email,
             password: hashedPassword,
-            picture: {
-                contentType: req.file.mimetype,
-                size: req.file.size,
-                image: encode_image,
-            }
+            picture: img
         });
 
         await newUser.save();
@@ -78,11 +72,9 @@ const userLogin = async (req, res) => {
             const token = jwt.sign({ userId: user._id }, process.env.SERECTKEY);
 
             // Convert the base64-encoded image back to its original form
-            const imageBuffer = Buffer.from(picture.image, 'base64');
-
-            res.status(200).json({
+            res.status(200).cookie('token', token).json({
                 token: token,
-                user: { firstName, lastName, mobile, email, picture: imageBuffer }
+                user: { firstName, lastName, mobile, email, picture }
             });
         }
     } catch (error) {
@@ -115,6 +107,6 @@ const index = async (req, res) => {
 module.exports = {
     createUser,
     userLogin,
-   
+
 }
 

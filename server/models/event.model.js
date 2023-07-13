@@ -11,15 +11,8 @@ const eventSchema = new mongoose.Schema({
         type: String
     },
     picture: {
-        contentType: {
-            type: String,
-        },
-        size: {
-            type: Number,
-        },
-        image: {
-            type: String,
-        },
+        data: Array,
+        type: Buffer
     },
     likes: [
         {
@@ -38,10 +31,21 @@ const eventSchema = new mongoose.Schema({
             message: {
                 type: String,
             },
-        },{ timestamps: true }
+        }, { timestamps: true }
     ]
 }, { timestamps: true })
 
 const Event = mongoose.model('event', eventSchema);
 
 module.exports = Event
+
+
+// contentType: {
+//     type: String,
+// },
+// size: {
+//     type: Number,
+// },
+// image: {
+//     type: String,
+// },

@@ -1,11 +1,13 @@
 import axios from "axios";
 
-const URL = `http://localhost:3000`;
+axios.defaults.baseURL = 'http://localhost:3000/';
+axios.defaults.withCredentials = true;
+
 
 // user api calling
 export const authenticationLogin = async (data) => {
     try {
-        const userData = await axios.post(`${URL}/api/user/login`, data);
+        const userData = await axios.post(`api/user/login`, data);
         console.log(userData)
         document.cookies = `token=${userData.data.token}`
         return userData
@@ -16,7 +18,7 @@ export const authenticationLogin = async (data) => {
 
 export const createAccount = async (data) => {
     try {
-        const createUser = await axios.post(`${URL}/api/user/signup`, data, {
+        const createUser = await axios.post(`api/user/signup`, data, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
@@ -38,7 +40,7 @@ export const addFlat = async (data, config) => {
 
 
     try {
-        const flatAdded = await axios.post(`${URL}/api/user/newflatmate`, data, {
+        const flatAdded = await axios.post(`api/user/newflatmate`, data, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 authorization: config
@@ -55,7 +57,7 @@ export const addFlat = async (data, config) => {
 
 export const createPost = async (data, config) => {
     try {
-        const post = await axios.post(`${URL}/api/user/post`, data, {
+        const post = await axios.post(`api/user/post`, data, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 authorization: config
@@ -70,22 +72,23 @@ export const createPost = async (data, config) => {
 
 export const fetchPost = async (config) => {
     try {
-        const allPost = await axios.get(`${URL}/api/user/social`, {
+        const allPost = await axios.get(`api/user/social`, {
             headers: {
                 authorization: config
             },
         });
-        // console.log(allPost.data)
-        return allPost.data
+        console.log(allPost.data.posts)
+        return allPost.data.posts
     } catch (error) {
         console.log("allPost", error)
 
     }
 }
+
 export const commentPost = async (data, config) => {
     console.log(data)
     try {
-        const comment = await axios.post(`${URL}/api/user/post/comment`, data, {
+        const comment = await axios.post(`api/user/post/comment`, data, {
             headers: {
                 authorization: config
             }
@@ -99,7 +102,7 @@ export const commentPost = async (data, config) => {
 export const likePost = async (data, config) => {
     console.log(data)
     try {
-        const like = await axios.post(`${URL}/api/user/post/like`, data, {
+        const like = await axios.post(`api/user/post/like`, data, {
             headers: {
                 authorization: config
             }
@@ -110,10 +113,11 @@ export const likePost = async (data, config) => {
     }
 
 }
+
 export const getAllcomment = async (postId, config) => {
     console.log(postId, config)
     try {
-        const likesUserDetails = await axios.get(`${URL}/api/user/post/comment/${postId}`, {
+        const likesUserDetails = await axios.get(`api/user/post/comment/${postId}`, {
             headers: {
                 Authorization: config,
             },
@@ -128,7 +132,7 @@ export const getAllcomment = async (postId, config) => {
 export const getAllLike = async (postId, config) => {
     console.log(postId, config)
     try {
-        const likesUserDetails = await axios.get(`${URL}/api/user/post/like/${postId}`, {
+        const likesUserDetails = await axios.get(`api/user/post/like/${postId}`, {
             headers: {
                 Authorization: config,
             },

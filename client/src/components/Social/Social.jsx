@@ -17,16 +17,80 @@ const Social = () => {
             try {
                 const config = `Bearer ${user.token}`;
                 const data = await fetchPost(config);
-                dispatch(addEvents(data));
+                if (data) {
+                    const type = 'buffer';
+
+                    data.forEach((post) => {
+                        if (post.postBy.picture) {
+                            // Convert the array of image data into a Uint8Array
+                            const uint8Array = new Uint8Array(post.postBy.picture.data);
+                            // Create a Blob from the Uint8Array
+                            const blob = new Blob([uint8Array], { type });
+                            // Create an object URL for the Blob
+                            const objectURL = URL.createObjectURL(blob);
+
+                            return post.postBy.picture = objectURL;
+                        }
+                    });
+
+                    data.forEach((post) => {
+                        if (post.picture) {
+                            // Convert the array of image data into a Uint8Array
+                            const uint8Array = new Uint8Array(post.picture.data);
+                            // Create a Blob from the Uint8Array
+                            const blob = new Blob([uint8Array], { type });
+                            // Create an object URL for the Blob
+                            const objectURL = URL.createObjectURL(blob);
+
+                            return post.picture = objectURL;
+                        }
+                    });
+
+                    data.forEach((post) => {
+                        if (post.comments.length >= 1) {
+                            post.comments.forEach((comment) => {
+                                // Convert the array of image data into a Uint8Array
+                                const uint8Array = new Uint8Array(comment.user.picture.data);
+                                // Create a Blob from the Uint8Array
+                                const blob = new Blob([uint8Array], { type });
+                                // Create an object URL for the Blob
+                                const objectURL = URL.createObjectURL(blob);
+
+                                return comment.user.picture = objectURL;
+                            })
+
+                        }
+                    });
+                    data.forEach((post) => {
+                        if (post.likes.length >= 1) {
+                            post.likes.forEach((like) => {
+                                // Convert the array of image data into a Uint8Array
+                                const uint8Array = new Uint8Array(like.user.picture.data);
+                                // Create a Blob from the Uint8Array
+                                const blob = new Blob([uint8Array], { type });
+                                // Create an object URL for the Blob
+                                const objectURL = URL.createObjectURL(blob);
+
+                                return like.user.picture = objectURL;
+                            })
+
+                        }
+                    });
+
+
+                    dispatch(addEvents(data));
+                }
+
             } catch (error) {
+                console.log(error)
                 // Handle error
             }
         };
 
         fetchData();
-    },[] );
+    }, []);
 
-    // [user.token, dispatch]
+    
     return (
         <>
             <AddEvent user={user} />

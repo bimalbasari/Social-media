@@ -27,15 +27,8 @@ const userSchema = new Schema({
     required: true
   },
   picture: {
-    contentType: {
-      type: String,
-    },
-    size: {
-      type: Number,
-    },
-    image: {
-      type: String,
-    },
+    data: Array,
+    type: Buffer
   }
 }, { timestamps: true });
 

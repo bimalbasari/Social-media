@@ -5,6 +5,8 @@ import AddFlat from '../Flatmete/AddFlat';
 import { selectUser } from "../../features/index";
 import { useDispatch } from 'react-redux';
 import { login } from "../../features/index.jsx";
+import PlacesFormPage from '../Flatmete/PlacesFormPage';
+
 const Navbar = () => {
   const [listing, setListing] = useState(false)
   const [isOpen, setIsOpen] = useState(false);
@@ -62,7 +64,7 @@ const Navbar = () => {
 
       </nav >
 
-      {listing && <div className='m-auto  bg-cyan-700  h-full p-6 shadow w-full absolute z-10 '><AddFlat setListing={setListing} /> </div>}
+      {listing && <div className='  bg-yellow-200  h-full p-6 shadow w-full absolute z-10 '><PlacesFormPage setListing={setListing} user={user} /> </div>}
 
     </div >
   );

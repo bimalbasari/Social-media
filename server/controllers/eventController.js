@@ -6,23 +6,47 @@ const createEvent = async (req, res) => {
 
   try {
     let img = fs.readFileSync(req.file.path);
-    let encode_image = img.toString("base64");
+
+    // let encode_image = img.toString("base64");
     const { content } = req.body;
     const userID = req.userId;
 
     const newEvent = new Event({
       postBy: userID,
       content,
-      picture: {
-        contentType: req.file.mimetype,
-        size: req.file.size,
-        image: encode_image,
-      }
+      picture: img
     })
     await newEvent.save();
-    res.status(200).json({ message: "Poste" })
+    res.status(200).json({ message: "Posted" })
   } catch (err) {
     res.status(500).json({ error: 'An error occurred while creating the event.' })
+  }
+}
+
+
+
+const fetchEvent = async (req, res) => {
+  try {
+    const events = await Event.find()
+      .populate({
+        path: 'postBy',
+        select: 'firstName lastName picture'
+      })
+      .populate({
+        path: 'likes.user',
+        select: 'firstName lastName picture'
+      })
+      .populate({
+        path: 'comments.user',
+        select: 'firstName lastName picture'
+      }).exec();
+
+    res.status(200).json({
+      posts: events
+    });
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ error: 'An error occurred while fetch flatMate.' });
   }
 }
 
@@ -33,73 +57,53 @@ const createEvent = async (req, res) => {
 //     const events = await Event.find()
 //       .populate({
 //         path: 'postBy',
-//         select: 'firstName lastName picture'
-//       })
-//       .populate({
-//         path: 'likes.user',
-//         select: 'firstName lastName picture'
-//       })
-//       .populate({
-//         path: 'comments.user',
-//         select: 'firstName lastName picture'
+//         select: 'firstName lastName picture',
 //       })
 //       .select('postBy content picture likes comments')
 //       .exec();
 
+//     // Convert picture to base64 for postBy
+//     // events.forEach((event) => {
+//     //   if (event.postBy.picture) {
+
+//     //     console.log(typeof (event.postBy.picture.image))
+//     //     const imageBuffer = Buffer.from(JSON.stringify(event.postBy.picture.image), 'base64');
+//     //     console.log(typeof (imageBuffer))
+//     //     return event.postBy.picture = imageBuffer;
+
+//     //   }
+//     // });
+
+
+//     const imageBuffer = Buffer.from(events[0].postBy.picture.image, 'base64');
+//     events[0].postBy.picture = imageBuffer;
+
+//     // events.map((event) => {
+//     //   if (event.postBy.picture) {
+//     //     const imageBuffer = Buffer.from(event.postBy.picture.image, 'base64');
+//     //    event.postBy.picture = imageBuffer
+//     //   }
+//     // });
+//  console.log("hello"  )
+
+
+//     //     // Convert picture to base64 for comments' user
+
+//     //     // events.forEach((event) => {
+//     //     //   event.comments.forEach((comment) => {
+//     //     //     if (comment.user.picture) {
+//     //     //       const buffer = Buffer.from(comment.user.picture.image, 'base64');
+//     //     //       comment.user.picture = buffer;
+//     //     //     }
+//     //     //   });
+//     //     // });
+
 //     res.status(200).send(events);
-
-
 //   } catch (error) {
-//     console.log(error)
-//     res.status(500).json({ error: 'An error occurred while fetch flatMate.' });
+//     console.log(error);
+//     res.status(500).json({ error: 'An error occurred while fetching events.' });
 //   }
-// }
-
-
-
-const fetchEvent = async (req, res) => {
-  try {
-    const events = await Event.find()
-      .populate({
-        path: 'postBy',
-        select: 'firstName lastName picture',
-      })
-      .select('postBy content picture likes comments')
-      .exec();
-
-    // Convert picture to base64 for postBy
-    // events.forEach((event) => {
-    //   if (event.postBy.picture) {
-    //     const imageBuffer = Buffer.from(event.postBy.picture.image, 'base64');
-    //     event.postBy.picture = imageBuffer;
-
-    //   }
-    // });
-    events.map((event) => {
-      if (event.postBy.picture) {
-        const imageBuffer = Buffer.from(event.postBy.picture.image, 'base64');
-        return event.postBy.picture = imageBuffer
-      }
-    });
-
-
-    // Convert picture to base64 for comments' user
-
-    // events.forEach((event) => {
-    //   event.comments.forEach((comment) => {
-    //     if (comment.user.picture) {
-    //       const buffer = Buffer.from(comment.user.picture.image, 'base64');
-    //       comment.user.picture = buffer;
-    //     }
-    //   });
-    // });
-
-    res.status(200).send(events);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: 'An error occurred while fetching events.' });
-  }
-};
+// };
 
 
 
