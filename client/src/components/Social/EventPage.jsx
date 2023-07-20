@@ -15,10 +15,10 @@ const EventPage = ({ data }) => {
     const [likes, setLikes] = useState(data.likes.length);
     const [comments, setComments] = useState(data.comments.length);
     const [commentBox, setCommentBox] = useState(false);
-    const config = `Bearer ${user.token}`;
+
 
     const onLike = async () => {
-        await likePost({ postId: data._id }, config)
+        await likePost({ postId: data._id })
         setLike(true)
         if (like) { setLikes(likes => likes = likes + 1) }
     }

@@ -6,6 +6,7 @@ import Home from "./components/Home/Home";
 import Social from "./components/Social/Social";
 import Flatmate from "./components/Flatmete/Flatmate";
 import Footer from "./components/Footer/Footer";
+import Chats from "./components/Chats";
 
 function App() {
 
@@ -15,9 +16,10 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/login" element={<Resister />} />
-        <Route path="/home/" element={<Home/>} >
-          <Route path="event" element={<Social/>}/>
-          <Route path="flatmate" element={<Flatmate/>}/>
+        <Route path="/home/" element={<Home />} >
+          <Route path="event" element={<Social />} />
+          <Route path="flatmate" element={<Flatmate />} />
+          <Route path="chats" element={<Chats />} />
         </Route>
       </Routes>
       <Footer />

@@ -6,7 +6,7 @@ import { commentPost } from "../../services/Api";
 const Comment = ({ user, data, id }) => {
 
     const [comment, setComment] = useState("")
-    const config = `Bearer ${user.token}`;
+
 
 
     const onCommentChange = (e) => {
@@ -19,7 +19,7 @@ const Comment = ({ user, data, id }) => {
             comment,
             postId: id
         }
-        await commentPost(commentData, config)
+        await commentPost(commentData)
 
         setComment("")
     }

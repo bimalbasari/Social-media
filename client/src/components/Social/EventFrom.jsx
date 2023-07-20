@@ -39,8 +39,8 @@ const EventForm = ({setisFromOpen}) => {
         if (content || picture) {
             const data = { content, picture }
             try {
-                const config = `Bearer ${user.token}`;
-                await createPost(data, config);
+
+                await createPost(data);
 
                 // setContent('');
                 // setPicture("");

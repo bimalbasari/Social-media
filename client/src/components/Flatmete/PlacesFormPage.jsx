@@ -1,25 +1,20 @@
-import { Navigate, useParams } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+import { useState } from "react";
 import PhotosUploader from "./PhotosUploader";
 import Perks from "./Perks";
-import { useEffect, useState } from "react";
-import axios from "axios";
-// import { set } from "mongoose";
+import { addFlat } from "../../services/Api";
 
 
-export default function PlacesFormPage({ user }) {
-    const { id } = useParams();
+export default function PlacesFormPage() {
     const [title, setitle] = useState('');
     const [address, setAddress] = useState('');
+    const [lokingFor, setLokingFor] = useState('');
+    const [location, setLocation] = useState('');
     const [addedPhotos, setAddedPhotos] = useState([]);
     const [description, setDescription] = useState('');
     const [perks, setPerks] = useState([]);
     const [extraInfo, setExtraInfo] = useState('');
-    const [checkIn, setcheckIn] = useState('');
-    const [checkOut, setCheckOut] = useState('');
-    const [maxGuests, setMaxGuests] = useState(1);
-    const [price, setPrice] = useState(100);
-    const [redirect, setRedirect] = useState(false);
-    const config = `Bearer ${user.token}`;
+    const [price, setPrice] = useState(1000);
 
 
     function inputHeader(text) {
@@ -44,36 +39,24 @@ export default function PlacesFormPage({ user }) {
     }
 
     const savePlace = async (ev) => {
-
         ev.preventDefault();
         try {
             const placeData = {
-                token: user.token,
                 title, address, addedPhotos,
                 description, perks, extraInfo,
-                checkIn, checkOut, maxGuests, price,
+                price, lokingFor, location,
             };
 
             //new places
-
-            await axios.post('places', placeData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    authorization: config
-                }
-            });
+            const property = await addFlat(placeData)
         } catch (err) {
             console.log(err)
         }
     }
 
-    if (redirect) {
-        return <Navigate to={'/home'} />
-    }
-
     return (
-        <div>
-            <form onSubmit={savePlace} >
+        <div className="bg-white p-4">
+            <form onSubmit={savePlace} className=" text-blue-500 " >
 
                 {preInput('Title', 'Title for your place should be short and catcy in the advertisment')}
                 <input type="text" value={title} onChange={ev => setitle(ev.target.value)} placeholder="title , for example: My lovley Apartment" />
@@ -81,8 +64,60 @@ export default function PlacesFormPage({ user }) {
                 {preInput('Address', 'Address to this place')}
                 <input type="text" value={address} onChange={ev => setAddress(ev.target.value)} placeholder="address" />
 
+                <div className="grid gap-2 grid-cols-2 md:grid-cols-4">
 
-                {preInput('Photos', 'more = better')}
+                    <div>
+                        <h3 className="mt-2 -mb-1 font-bold">Rent</h3>
+                        <input type="number" value={price} onChange={ev => setPrice(ev.target.value)} />
+                    </div>
+
+                    <div>
+                        <h3 className="mt-2 mb-1 font-bold">Loking For</h3>
+                        <select
+                            value={lokingFor}
+                            onChange={(ev) => setLokingFor(ev.target.value)}
+                            className="w-full rounded-full py-2 px-3  text-blue-500 border duration-200">
+                            <option value="" >Loking For</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Any">Any</option>
+                        </select>
+                    </div>
+
+
+                    <div>
+                        <h3 className="mt-2 mb-1 font-bold">Location</h3>
+                        <select className="w-full rounded-full py-2 px-3  text-blue-500 border duration-200"
+                            value={location}
+                            onChange={(ev) => setLocation(ev.target.value)}>
+                            <option value="">Select a City</option>
+                            <option value="Mumbai">Mumbai</option>
+                            <option value="Delhi">Delhi</option>
+                            <option value="Bangalore">Bangalore</option>
+                            <option value="Hyderabad">Hyderabad</option>
+                            <option value="Chennai">Chennai</option>
+                            <option value="Kolkata">Kolkata</option>
+                            <option value="Ahmedabad">Ahmedabad</option>
+                            <option value="Pune">Pune</option>
+                            <option value="Jaipur">Jaipur</option>
+                            <option value="Surat">Surat</option>
+                            <option value="Lucknow">Lucknow</option>
+                            <option value="Kanpur">Kanpur</option>
+                            <option value="Nagpur">Nagpur</option>
+                            <option value="Indore">Indore</option>
+                            <option value="Thane">Thane</option>
+                            <option value="Bhopal">Bhopal</option>
+                            <option value="Visakhapatnam">Visakhapatnam</option>
+                            <option value="Pimpri-Chinchwad">Pimpri-Chinchwad</option>
+                            <option value="Patna">Patna</option>
+                            <option value="Vadodara">Vadodara</option>
+                        </select>
+
+                    </div>
+
+
+                </div>
+
 
                 <PhotosUploader addedPhotos={addedPhotos} onChange={setAddedPhotos} />
 
@@ -100,31 +135,8 @@ export default function PlacesFormPage({ user }) {
                 {preInput('Extra info', 'house rules, etc')}
                 <textarea value={extraInfo} onChange={ev => setExtraInfo(ev.target.value)} />
 
-                {preInput('Check in&out times', 'add check in and out times, remember to have some window for cleaning the room between guest')}
 
-                <div className="grid gap-2 grid-cols-2 md:grid-cols-4">
 
-                    <div>
-                        <h3 className="mt-2 -mb-1">Check in times</h3>
-                        <input type="number" placeholder="14" value={checkIn} onChange={ev => setcheckIn(ev.target.value)} />
-                    </div>
-
-                    <div>
-                        <h3 className="mt-2 -mb-1">Check out times</h3>
-                        <input type="number" placeholder="11" value={checkOut} onChange={ev => setCheckOut(ev.target.value)} />
-                    </div>
-
-                    <div>
-                        <h3 className="mt-2 -mb-1">Max number of guest</h3>
-                        <input type="number" value={maxGuests} onChange={ev => setMaxGuests(ev.target.value)} />
-                    </div>
-
-                    <div>
-                        <h3 className="mt-2 -mb-1">Price per night</h3>
-                        <input type="number" value={price} onChange={ev => setPrice(ev.target.value)} />
-                    </div>
-
-                </div>
 
                 <button className="primary my-4">Save</button>
 

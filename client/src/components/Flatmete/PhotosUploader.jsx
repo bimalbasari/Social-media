@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 
 const photoLink = []
-
+const photos = []
 export default function PhotosUploader({ addedPhotos, onChange }) {
 
     function uploadPhoto(ev) {
@@ -17,8 +17,11 @@ export default function PhotosUploader({ addedPhotos, onChange }) {
             };
             reader.readAsDataURL(files[i]);
             data.append('photos', files[i]);
+            photos.push(files[i])
         }
-        onChange(data)
+        onChange(photos)
+        console.log(photos)
+        console.log(data ,"data")
     }
 
     function removePhoto(ev, filename) {

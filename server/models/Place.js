@@ -1,16 +1,24 @@
 const mongoose = require('mongoose');
-const { Schema } = mongoose;
+
 const User = require("./user.model");
 
 const placeschema = new mongoose.Schema({
   owner: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: mongoose.Schema.ObjectId,
     ref: User,
     required: true
   },
   title: {
     type: String,
     required: true
+  },
+  location: {
+    type: String,
+    required: true,
+  },
+  lokingFor: {
+    type: String,
+    required: true,
   },
   address: {
     type: String,
@@ -19,7 +27,7 @@ const placeschema = new mongoose.Schema({
   photos: [{
     data: Array,
     type: Buffer
-}],
+  }],
   description: {
     type: String,
     required: true
@@ -30,27 +38,12 @@ const placeschema = new mongoose.Schema({
   extraInfo: {
     type: String
   },
-  checkIn: {
-    type: String,
-    required: true
-  },
-  checkOut: {
-    type: String,
-    required: true
-  },
-  maxGuests: {
-    type: Number,
-    required: true
-  },
+
   price: {
     type: Number,
     required: true
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now
   }
-});
+}, { timestamps: true });
 
 
 const PlaceModel = mongoose.model('Place', placeschema);

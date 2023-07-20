@@ -4,8 +4,6 @@ const jwt = require('jsonwebtoken');
 const dotenv = require("dotenv");
 const User = require("../models/user.model")
 
-
-
 dotenv.config();
 
 const createUser = async (req, res) => {
@@ -50,6 +48,7 @@ const createUser = async (req, res) => {
 };
 
 
+
 const userLogin = async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -69,19 +68,21 @@ const userLogin = async (req, res) => {
             const { firstName, lastName, mobile, email, picture } = user;
 
             // Generate a JWT token
-            const token = jwt.sign({ userId: user._id }, process.env.SERECTKEY);
+            const token = jwt.sign({ userId: user._id }, process.env.SECRETKEY);
 
-            // Convert the base64-encoded image back to its original form
-            res.status(200).cookie('token', token).json({
-                token: token,
+            // Set the "Bearer" cookie with the generated token
+            res.cookie('Bearer', token, {  maxAge: 3600000 });
+
+            // Return the user information in the response
+            res.status(200).json({
                 user: { firstName, lastName, mobile, email, picture }
             });
         }
     } catch (error) {
         res.status(500).json({ message: 'Internal server error' });
+        console.log(error)
     }
 };
-
 
 
 

@@ -3,7 +3,8 @@ const multer = require("multer");
 const authMiddleware = require("../middlewares/authMiddleware");
 const userController = require("../controllers/userControllers");
 const eventController = require("../controllers/eventController");
-const flatMatesController = require("../controllers/flatMatesController");
+const flatMatesController = require("../controllers/flatController");
+const ChatController = require("../controllers/ChatController");
 
 
 const router = express.Router();
@@ -38,15 +39,12 @@ router.post('/post/like', authMiddleware, eventController.addLikeToEvent);
 
 // Flat routes
 
-// router.post('/newflatmate', (req, res, next) => {
-//   console.log(req.file)
-//   next()
-// }, authMiddleware, upload.array('pictures', 3), flatMatesController.addNewFlat);
-router.post('/newflatmate', (req, res) => {
-  console.log(req.files)
 
-});
+router.post('/places', authMiddleware, upload.array('photos', 4),flatMatesController.addNewFlat);
+
+
 router.get("/flatmate", flatMatesController.flatMatesFatch);
-
+router.get("/flatmate/chats",authMiddleware, ChatController.flatMateChats);
+router.get("/flatmate/chat/:id",authMiddleware, ChatController.flatMateSingalChat);
 
 module.exports = router;

@@ -15,8 +15,7 @@ const Social = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const config = `Bearer ${user.token}`;
-                const data = await fetchPost(config);
+                const data = await fetchPost();
                 if (data) {
                     const type = 'buffer';
 

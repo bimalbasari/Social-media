@@ -57,7 +57,7 @@ const Navbar = () => {
 
           </li>
           <li className='text-md font-[Poppins]'>
-            <img src={user ? user.picture : "../dummy-user.jpg"} alt="image" className=' h-8 inline rounded-full object-fill mx-1' />
+            <img src={user ? user.picture : "../dummy-user.jpg"} className=' h-8 inline rounded-full object-fill mx-1' />
             <span>{user ? user.firstName : "User"}</span>
           </li>
         </ul>
