@@ -2,7 +2,7 @@ const fs = require("fs");
 const User = require("../models/user.model");
 const Event = require("../models/event.model")
 
-const createEvent = async (req, res) => {
+const postEvent = async (req, res) => {
 
   try {
     let img = fs.readFileSync(req.file.path);
@@ -224,7 +224,7 @@ const getLikesUserDetails = async (req, res) => {
 
 
 module.exports = {
-  createEvent,
+  postEvent,
   addCommentToEvent,
   getCommentUserDetails,
   addLikeToEvent,

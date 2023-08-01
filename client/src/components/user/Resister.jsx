@@ -1,15 +1,18 @@
-import React, { useState } from 'react'
-import Login from './Login'
-import Signup from './SignUp'
+import { useState } from "react";
+import Login from "./Login";
+import Signup from "./SignUp";
 
 const Resister = () => {
-    const [account,setAccount]=useState(true)
+  const [account, setAccount] = useState(true);
   return (
     <>
-      {account?<Login setAccount={setAccount}/>:<Signup setAccount={setAccount}/>}
-    
+      {account ? (
+        <Login setAccount={setAccount} />
+      ) : (
+        <Signup setAccount={setAccount} />
+      )}
     </>
-  )
-}
+  );
+};
 
-export default Resister
+export default Resister;

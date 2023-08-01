@@ -3,15 +3,14 @@ import { useSelector } from "react-redux";
 import { createPost } from '../../services/Api';
 import { selectUser } from "../../features/index";
 import { GrFormClose } from "react-icons/gr"
+import { useForm } from "react-hook-form";
 
-
-const EventForm = ({setisFromOpen}) => {
+const EventForm = ({ setisFromOpen }) => {
     const [content, setContent] = useState('');
     const [picture, setPicture] = useState("");
-    const [previewURL, setPreviewURL] = useState('');
+    const [previewURL, setPreviewURL] = useState(null);
     const user = useSelector(selectUser)
-
-
+ 
     const handleContentChange = (event) => {
         setContent(event.target.value);
     };
@@ -52,46 +51,45 @@ const EventForm = ({setisFromOpen}) => {
     };
     const onEventAdd = () => {
         setisFromOpen(false);
-    
+
     }
 
     return (
-        <div className=" bg-black bg-transparent w-full md:h-screen   absolute z-20 m-auto flex items-center justify-center ">
+        <div className=" backdrop-blur-sm bg-black/30  w-full sm:h-screen h-full   absolute z-20 top-16 flex items-center justify-center ">
 
-            <form onSubmit={handleSubmit} className="bg-white border-double border-4 border-slate-700 rounded-lg overflow-hidden p-4 md:w-2/4 md:h-4/5 ">
-                <div  className="flex justify-end" ><span onClick={onEventAdd}><GrFormClose /></span></div>
-                <div className="border-b border-gray-400 pb-4">
+            <form onSubmit={handleSubmit} className="bg-white  rounded-lg  p-4 md:w-2/4 md:h-4/5 w-full h-full  m-auto">
+
+                <div className="flex justify-end" ><span onClick={onEventAdd}><GrFormClose /></span></div>
+
+                <div className="p-1">
                     <textarea
-                        className=" resize-none bg-transparent focus:outline-none first-letter:capitalize font-sarif w-full"
-                        rows="3"
+                        className=" resize-none sm:h-20 h-12 border-1 border-gray-400  focus:outline-none first-letter:capitalize "
+                        rows="2"
                         placeholder="What's on your mind?"
                         value={content}
                         onChange={handleContentChange}></textarea>
                 </div>
-                <div className="flex items-start border-b border-gray-200 p-1">
-                    <input
-                        type="file"
-                        id="picture"
-                        className="border border-gray-300 rounded-md w-full p-3 "
-                        onChange={handlePictureChange}
-                    />
-                </div>
-                <div className='mt-2 h-2/4'>
-                    <img
-                        src={previewURL ? previewURL : "../dummy.png"}
-                        alt="User's Picture"
-                        className="object-contain m-auto w-4/5 h-full"
-                    />
+
+                <div className="flex items-start border-b border-gray-200 sm:p-1 w-full sm:h-3/5 h-2/4">
+
+                    <label className=" w-full h-full cursor-pointer  text-blue-400  object-cover ">
+                    Add picture
+                        <input type="file" className="hidden " onChange={handlePictureChange} />
+                        <img src={previewURL ? previewURL : "../dummy.png"}  className='w-full h-full' />
+                      
+                    </label>
 
                 </div>
-                <div className="flex justify-end pt-4 pl-3">
+
+                <div className="flex justify-end pt-4 mt-4 pl-3">
                     <button
                         type="submit"
-                        className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                        className="sm:px-4 sm:py-2 p-1 bg-green-600 text-white rounded hover:bg-green-400"
                     >
                         Post
                     </button>
                 </div>
+
             </form>
         </div>
     );

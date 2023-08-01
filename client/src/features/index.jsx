@@ -8,7 +8,7 @@ export const userSlice = createSlice({
   reducers: {
     login: (state, action) => {
       state.value = action.payload;
-      localStorage.setItem('user', JSON.stringify({ user: action.payload }));
+      // localStorage.setItem('user', JSON.stringify({ user: action.payload }));
     },
   },
 });

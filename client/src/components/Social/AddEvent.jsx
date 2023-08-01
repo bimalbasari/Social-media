@@ -13,12 +13,18 @@ const AddEvent = ({ user }) => {
     return (
         <>
             {isFromOpen && <EventFrom setisFromOpen={setisFromOpen} />}
-            <div className="bg-white  md:w-2/4 m-auto  h-32  border-double border-4 border-slate-700 mt-4 rounded-lg overflow-hidden"onClick={onEventAdd}>
+            <div className="bg-white  md:w-2/4 m-auto  h-32  border-double border-4 border-slate-700 mt-4 rounded-lg " onClick={onEventAdd}>
 
-                <div className=" flex items-center justify-center h-1/2 drop-shadow-lg">
-                    {user && <img src={user.picture} alt="" className="max-w-1/5 h-10 mx-2 rounded-full" />}
-                    <input type="text" name="" id="" placeholder="Start a post" className="w-3/4 h-10 rounded-xl p-2 border-gray-400 border-2 outline-0" />
+                <div className=" flex items-center justify-center h-1/2 drop-shadow-lg w-full">
+
+                    {user && <img src={user.picture} alt="" className="max-w-1/4 h-10 mx-2 rounded-full" />}
+                  
+                    <div className="w-3/4">
+                        <input type="text" placeholder="Start a post" />
+                    </div>
+
                 </div>
+
                 <div className=" flex items-center justify-evenly h-1/2" >
                     <div className=" sm:flex items-center text-2xl text-blue-600 cursor-pointer  hover:bg-gray-200 p-4 rounded-lg drop-shadow-lg">
                         <HiPhoto />
