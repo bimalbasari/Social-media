@@ -15,19 +15,20 @@ const addNewFlat = async (req, res) => {
 
         const uploadedfiles = []
 
-        for (let i = 0; i < req.files.length; i++) {
-            let img = fs.readFileSync(req.files[i].path);
-            uploadedfiles.push(img);
-        }
+        // for (let i = 0; i < req.files.length; i++) {
+        //     let img = fs.readFileSync(req.files[i].path);
+        //     uploadedfiles.push(img);
+        // }
+        console.log(req,"req log")
 
-        const placeDoc = await Place.create({
-            owner: userID,
-            photos: uploadedfiles,
-            title, address, description,
-            perks, extraInfo, lokingFor, location, price
+        // const placeDoc = await Place.create({
+        //     owner: userID,
+        //     photos: uploadedfiles,
+        //     title, address, description,
+        //     perks, extraInfo, lokingFor, location, price
 
-        });
-        res.status(200).json(placeDoc);
+        // });
+        // res.status(200).json(placeDoc);
 
     } catch (err) {
         console.log(err)

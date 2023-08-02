@@ -9,17 +9,24 @@ const router = express.Router();
 // Multer Disk Stroge Function
 const storage = multer.diskStorage({
 
-    filename: function (req, file, cb) {
-      cb(null, Date.now() + "-" + file.originalname);
-    },
-  });
-  
-  
-  const upload = multer({ storage });
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "-" + file.originalname);
+  },
+});
+let multerStorage = multer.memoryStorage()
+let multerUploads = multer({storage: multerStorage, limits: { fileSize: 1024 * 1024 * 10 }})
+router.post("/uploadMusic", multerUploads.array("musics"),
+function (req, res, next) {
+    const musicFiles = req.files;
+    console.log(musicFiles);
+});
+
+const upload = multer({ storage });
 // Flat routes
 
 
-router.post('/add', authMiddleware, upload.array('photos', 4), flatController.addNewFlat);
+
+router.post('/add', authMiddleware, upload.array('picture'), flatController.addNewFlat);
 
 router.get("/get", flatController.flatMatesFatch);
 

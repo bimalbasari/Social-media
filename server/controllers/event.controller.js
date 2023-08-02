@@ -6,7 +6,7 @@ const postEvent = async (req, res) => {
 
   try {
     let img = fs.readFileSync(req.file.path);
-
+    console.log(req.file.path)
     // let encode_image = img.toString("base64");
     const { content } = req.body;
     const userID = req.userId;
